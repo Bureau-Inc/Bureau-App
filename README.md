@@ -14,8 +14,20 @@ You also need to install the dependencies required by React Native:
 
 ### Development/Local running
 
-To develop or run locally, execute the following steps:
-1. Install the prereqs mentioned above.
-2. `npm install`
-3. `npm run start`
-4. `npm run android`
+Assuming you have all the requirements installed, you can setup and run the project by running:
+
+- `npm install` to install the dependencies
+- run the following steps for your platform
+
+#### Android
+
+- `npm start` to start the metro bundler, in a dedicated terminal
+- `npm run android` to run the Android application (remember to start a simulator or connect an Android phone)
+
+#### iOS
+
+- `cd ios`
+- `pod install` to install pod dependencies
+- `cd ..` to come back to the root folder
+- `npm start` to start the metro bundler, in a dedicated terminal
+- `npm run ios` to run the iOS application (remember to start a simulator or connect an iPhone phone)
