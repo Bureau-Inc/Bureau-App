@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "jetifier": "^1.6.6",
     "react": "16.8.3",
     "react-native": "0.59.4",
     "react-native-gesture-handler": "^1.1.0",
