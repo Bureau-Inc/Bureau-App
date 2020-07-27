@@ -2,7 +2,7 @@
  */
 const images = {
     icons: {
-        logo_blue: require('../assets/logo_blue_text_white.png'),
+        logo_blue: require('../assets/images/logo_blue_text_white.png'),
     }
 };
 

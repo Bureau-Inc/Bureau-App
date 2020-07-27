@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, TextInput, Image, Text } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 
 import { Button } from '../../components';
+import { BlueContainer } from '../../config/svgs';
 import styles from './styles';
 import images from '../../config/images';
 
@@ -25,12 +25,8 @@ class LoginView extends Component {
         }; 
         return (
             <View style={styles.container}>
-                <LinearGradient
-                    colors={['#09C2FF', '#324EA3', '#324EA3']}
-                    useAngle={true}
-                    angle={45}
-                    style={styles.gradient}
-                >
+                <BlueContainer style={styles.curveContainer} />
+                <View style={styles.absoluteContainer}>
                     <View style={styles.topContainer}>
                         <View style={styles.logoContainer}>
                             <Image
@@ -64,17 +60,26 @@ class LoginView extends Component {
                                     />
                                 </View>
                             </View>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.text}>
+                            A 4 digit OTP will be sent as an SMS to verify your mobile number
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                </LinearGradient>
 
-                <View style={styles.buttonContainer}>
-                    <Button
-                        buttonText={'LOGIN'}
-                        customStyle={styles.button}
-                        onButtonPress={()=>{}}
-                    />
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <Button
+                            buttonText={'LOGIN'}
+                            customStyle={styles.button}
+                            onButtonPress={()=>{}}
+                        />
+                    </View>
                 </View>
+
+                  
+
+                
             </View>
         );
     }

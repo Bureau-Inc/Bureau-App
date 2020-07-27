@@ -3,6 +3,9 @@ import { StyleSheet, Dimensions } from 'react-native';
 import AppStyles from '../../config/styles';
 
 const styles = StyleSheet.create({
+    absoluteContainer: {
+        position: 'absolute'
+    },
     button: {
         height: 45,
         width: '90%'
@@ -10,19 +13,20 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 30,
+        paddingVertical: 40,
         width: '100%'
     },
     container: {
-        alignItems: 'center',
-        flex: 1
+        alignItems: 'flex-start',
+        flex: 1,
+        position: 'relative'
     },
-    gradient: {
-        alignItems: 'center',
-        borderBottomLeftRadius: 185,
-        borderBottomRightRadius: 370,
-        height: Dimensions.get('window').height * 2/3,
-        width: '145%'
+    curveContainer: {
+        alignItems: 'flex-end',
+        marginHorizontal: -415,
+        marginTop: (Dimensions.get('screen').height * 3/5) - 900,
+        position: 'absolute',
+        width: '150%'
     },
     logo: {
         height: '100%',
@@ -39,14 +43,15 @@ const styles = StyleSheet.create({
     phoneNumberContainer: {
         borderRadius: 5,
         flexDirection: 'row',
-        height: '30%',
+        height: 48,
+        marginBottom: '5%',
         overflow: 'hidden',
         width:'100%'
     },
     phoneNumberInputContainer: {
         backgroundColor: AppStyles.colors.WHITE,
         height: '100%',
-        padding:3,
+        padding: 2,
         width:'85%'
     },
     phoneNumberPrefixContainer: {
@@ -54,21 +59,22 @@ const styles = StyleSheet.create({
         backgroundColor: AppStyles.colors.WHITE,
         borderRightWidth: 1,
         height: '100%',
-        padding: 3,
+        padding: 2,
         width: '15%'
     },
     text: {
         color: AppStyles.colors.WHITE,
+        fontFamily: 'SofiaProSemiBold',
         fontSize: 17
     },
     textContainer: {
         paddingBottom: '5%'
     },
     topContainer: {
-        height: '100%',
+        height: Dimensions.get('screen').height * 3/5,
         justifyContent: 'space-around',
-        padding: 15,
-        width: '65%'
+        padding: 25,
+        width: '100%'
     }
 });
 
