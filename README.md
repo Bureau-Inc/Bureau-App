@@ -2,7 +2,7 @@
 
 ## Getting Started
  Follow the instructions given below to run the app locally.
- 
+
 ### Requirements
 
 Node 8 or greater is required. Development for iOS requires a Mac and Xcode 9 or up, and will target iOS 9 and up.
@@ -17,6 +17,8 @@ You also need to install the dependencies required by React Native:
 Assuming you have all the requirements installed, you can setup and run the project by running:
 
 - `npm install` to install the dependencies
+- `npx jetify`
+- `npx react-native link` to link assets
 - run the following steps for your platform
 
 #### Android
