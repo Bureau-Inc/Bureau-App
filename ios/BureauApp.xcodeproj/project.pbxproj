@@ -47,6 +47,8 @@
 		423E6EB1F06A44AB83266914 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC5D075255241FC82AF19A7 /* libBVLinearGradient.a */; };
 		98A6EF6EBC0340A3B9D26CCF /* Helvetica-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42D94DF57554EF79A05A3FF /* Helvetica-Regular.ttf */; };
 		9BD890BE34334F9B90FECF76 /* Helvetica-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F5A5006CF23493D90E6CAFE /* Helvetica-Bold.ttf */; };
+		C79740BF18E840C6949EC2DF /* NotoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB1C4290783B4B5489E2B559 /* NotoSans-Bold.ttf */; };
+		539601ED7B7246E4A572F566 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 503890C8077C4426AC39CA60 /* NotoSans-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -364,6 +366,8 @@
 		CBC5D075255241FC82AF19A7 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		C42D94DF57554EF79A05A3FF /* Helvetica-Regular.ttf */ = {isa = PBXFileReference; name = "Helvetica-Regular.ttf"; path = "../app/assets/fonts/Helvetica-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		0F5A5006CF23493D90E6CAFE /* Helvetica-Bold.ttf */ = {isa = PBXFileReference; name = "Helvetica-Bold.ttf"; path = "../app/assets/fonts/Helvetica-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AB1C4290783B4B5489E2B559 /* NotoSans-Bold.ttf */ = {isa = PBXFileReference; name = "NotoSans-Bold.ttf"; path = "../app/assets/fonts/NotoSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		503890C8077C4426AC39CA60 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; name = "NotoSans-Regular.ttf"; path = "../app/assets/fonts/NotoSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -642,6 +646,8 @@
 			children = (
 				C42D94DF57554EF79A05A3FF /* Helvetica-Regular.ttf */,
 				0F5A5006CF23493D90E6CAFE /* Helvetica-Bold.ttf */,
+				AB1C4290783B4B5489E2B559 /* NotoSans-Bold.ttf */,
+				503890C8077C4426AC39CA60 /* NotoSans-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1095,6 +1101,8 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				98A6EF6EBC0340A3B9D26CCF /* Helvetica-Regular.ttf in Resources */,
 				9BD890BE34334F9B90FECF76 /* Helvetica-Bold.ttf in Resources */,
+				C79740BF18E840C6949EC2DF /* NotoSans-Bold.ttf in Resources */,
+				539601ED7B7246E4A572F566 /* NotoSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
