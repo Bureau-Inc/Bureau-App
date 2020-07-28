@@ -17,6 +17,8 @@ You also need to install the dependencies required by React Native:
 Assuming you have all the requirements installed, you can setup and run the project by running:
 
 - `npm install` to install the dependencies
+- `npx jetify`
+- `npx react-native link` to link assets
 - run the following steps for your platform
 
 #### Android
