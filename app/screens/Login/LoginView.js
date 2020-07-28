@@ -17,7 +17,6 @@ class LoginView extends Component {
     navigate = () => {};
 
     render() {
-
         const onChangeText = (updatedPhoneNumber) => {
             this.setState({
                 phoneNumber: updatedPhoneNumber.replace(/[^0-9]/g, '')
@@ -55,7 +54,7 @@ class LoginView extends Component {
                                         dataDetectorTypes={'phoneNumber'}
                                         keyboardType={'numeric'}
                                         style={styles.phoneNumber}
-                                        onChangeText={text => onChangeText(text)}
+                                        onChangeText={onChangeText}
                                         value={this.state.phoneNumber}
                                     />
                                 </View>
@@ -66,7 +65,6 @@ class LoginView extends Component {
                                 </Text>
                             </View>
                         </View>
-
                     </View>
                     <View style={styles.buttonContainer}>
                         <Button
@@ -76,10 +74,6 @@ class LoginView extends Component {
                         />
                     </View>
                 </View>
-
-                  
-
-                
             </View>
         );
     }

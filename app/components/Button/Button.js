@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
-
+import styles from './styles';
 
 class Button extends Component{
     constructor(props){
@@ -11,11 +11,11 @@ class Button extends Component{
     render(){
         const { customStyle, buttonText, onButtonPress } = this.props;
 
-        return(<TouchableOpacity onPress={onButtonPress} style={[{ backgroundColor: '#09C2FF', color: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 5 }, customStyle]}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{buttonText}</Text>
+        return(<TouchableOpacity onPress={onButtonPress} style={[ styles.button, customStyle]}>
+            <Text style={styles.buttonText}>{buttonText}</Text>
         </TouchableOpacity>);
     }
-};
+}
 
 Button.propTypes = {
     buttonText: PropTypes.string,

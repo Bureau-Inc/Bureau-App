@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     button: {
-        fontFamily: 'NotoSans-Bold',
         height: 45,
         width: '90%'
     },
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: AppStyles.colors.WHITE,
-        fontFamily: 'NotoSans-Regular',
+        fontFamily: AppStyles.fonts.FONT_REGULAR,
         fontSize: 16,
         lineHeight: 25
     },

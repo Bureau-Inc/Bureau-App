@@ -5,11 +5,12 @@
 const AppStyles = {
     colors: {
         WHITE: '#FFFFFF',
-        BLACK: '#000000'
+        BLACK: '#000000',
+        PRIMARY: '#09C2FF'
     },
     fonts: {
-        // FONT_REGULAR: 'Roboto-Regular',
-        // FONT_MEDIUM: 'Roboto-Medium'
+        FONT_REGULAR: 'NotoSans-Regular',
+        FONT_BOLD: 'NotoSans-Bold'
     }
 };
 export default AppStyles;
