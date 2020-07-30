@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, TextInput, Image, Text } from 'react-native';
+import { View, TextInput, Image, Text, Alert } from 'react-native';
+import { NetworkInfo } from 'react-native-network-info';
 import PropTypes from 'prop-types';
 
 import { Button } from '../../components';
@@ -11,10 +12,33 @@ class LoginView extends Component {
     constructor(props) {
         super(props);
         this.state={
-            phoneNumber: ''
+            phoneNumber: '8848062056',
+            isLoading: this.props.isLoginProcessing,
+            startInitiateCycle: false,
+            startFinalizeFlow: false,
         };
     }
-    navigate = () => {};
+
+    _handleLoginClick = async () => {
+        const userIp = await NetworkInfo.getIPAddress();
+        const response =  await this.props.authDiscover(userIp);
+        if(response && response.supported){
+            const authInitiateResponse = await this.props.authInitiate(userIp, `91${this.state.phoneNumber}`, response.correlationId);
+            const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
+            const userInfo = await this.props.getUserInfo(response.correlationId);
+            //console.log(userInfo, authFinalizeResponse, authInitiateResponse);
+            if(userInfo.mobileNumber === `91${this.state.phoneNumber}`){
+                this.props.showLoginSuccessfulScreen();
+            }
+            else {
+                Alert.alert('Error!', 'User Authentication Failed');
+            }
+        }
+        else{
+            //INITIATE OTP CALL
+            Alert.alert('Authentication REquired!', 'Initiating OTP Call');
+        }
+    }
 
     render() {
         const onChangeText = (updatedPhoneNumber) => {
@@ -69,8 +93,9 @@ class LoginView extends Component {
                     <View style={styles.buttonContainer}>
                         <Button
                             buttonText={'LOGIN'}
+                            isLoading={this.state.isLoading}
                             customStyle={styles.button}
-                            onButtonPress={()=>{}}
+                            onButtonPress={this._handleLoginClick}
                         />
                     </View>
                 </View>
@@ -80,7 +105,12 @@ class LoginView extends Component {
 }
 
 LoginView.propTypes = {
-    onLogin: PropTypes.func
+    isLoginProcessing: PropTypes.bool,
+    authDiscover: PropTypes.func,
+    authInitiate: PropTypes.func,
+    authFinalize: PropTypes.func,
+    getUserInfo: PropTypes.func,
+    showLoginSuccessfulScreen: PropTypes.func
 };
 
 export default LoginView;

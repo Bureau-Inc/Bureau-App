@@ -1,8 +1,11 @@
 /* App config for apis
  */
 const ApiConstants = {
-    BASE_URL: 'http://ileaf-dev.com/',
-    LOGIN: 'api/Users/login'
+    DISCOVER: '/discover',
+    INITIATE: '/initiate',
+    FINALIZE: '/finalize',
+    INITIATE_CALL_TYPE: 'INITIATE',
+    FINALIZE_CALL_TYPE: 'FINALIZE'
 };
 
 export default ApiConstants;
