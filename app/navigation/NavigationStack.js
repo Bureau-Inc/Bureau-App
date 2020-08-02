@@ -1,7 +1,7 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Login from 'app/screens/Login';
-import Home from 'app/screens/Home';
+import LoginSuccessful from 'app/screens/LoginSuccessful';
 
 const RNApp = createStackNavigator(
     {
@@ -9,8 +9,8 @@ const RNApp = createStackNavigator(
             screen: Login,
             navigationOptions: { header: null, gesturesEnabled: false }
         },
-        Home: {
-            screen: Home,
+        LoginSuccessful: {
+            screen: LoginSuccessful,
             navigationOptions: { header: null, gesturesEnabled: false }
         }
     },
