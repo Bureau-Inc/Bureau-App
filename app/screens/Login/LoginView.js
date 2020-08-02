@@ -7,6 +7,7 @@ import { Button } from '../../components';
 import { BlueContainer } from '../../config/svgs';
 import styles from './styles';
 import images from '../../config/images';
+import { getPhoneNumberWithCountryCode } from '../../utils/countryUtils';
 
 class LoginView extends Component {
     constructor(props) {
@@ -23,11 +24,10 @@ class LoginView extends Component {
         const userIp = await NetworkInfo.getIPAddress();
         const response =  await this.props.authDiscover(userIp);
         if(response && response.supported){
-            const authInitiateResponse = await this.props.authInitiate(userIp, `91${this.state.phoneNumber}`, response.correlationId);
+            const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), response.correlationId);
             const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
             const userInfo = await this.props.getUserInfo(response.correlationId);
-            //console.log(userInfo, authFinalizeResponse, authInitiateResponse);
-            if(userInfo.mobileNumber === `91${this.state.phoneNumber}`){
+            if(userInfo.mobileNumber === getPhoneNumberWithCountryCode('india', this.state.phoneNumber)){
                 this.props.showLoginSuccessfulScreen();
             }
             else {

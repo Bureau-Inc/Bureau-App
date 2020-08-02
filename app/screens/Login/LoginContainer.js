@@ -7,7 +7,7 @@ import {
     authInitiate as authInitiateSaga,
     authFinalize as authFinalizeSaga,
     getUserInfo
-} from '../../sagas/auth';
+} from '../../sagas';
 import { navigateToLoginSuccessful } from '../../actions/navigationActions';
 
 class LoginContainer extends Component {

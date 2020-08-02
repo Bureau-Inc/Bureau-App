@@ -1,6 +1,6 @@
 /* App config for apis
  */
-const ApiConstants = {
+export default {
     DISCOVER: '/discover',
     INITIATE: '/initiate',
     FINALIZE: '/finalize',
@@ -8,4 +8,3 @@ const ApiConstants = {
     FINALIZE_CALL_TYPE: 'FINALIZE'
 };
 
-export default ApiConstants;
