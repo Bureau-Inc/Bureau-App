@@ -6,21 +6,28 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "link": "react-native link",
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "jetifier": "^1.6.6",
     "react": "16.8.3",
     "react-native": "0.59.4",
+    "react-native-dotenv": "^2.2.3",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-network-info": "^5.2.1",
     "react-native-svg": "^12.1.0",
     "react-native-svg-transformer": "^0.14.3",
+    "react-native-webview": "^10.3.2",
     "react-navigation": "^3.8.1",
     "react-redux": "^7.0.2",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
-    "redux-saga": "^1.0.2"
+    "redux-saga": "^1.0.2",
+    "seamless-immutable": "^7.1.4",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -40,7 +47,7 @@
   },
   "rnpm": {
     "assets": [
-   "./app/assets/fonts/"
+      "./app/assets/fonts/"
     ]
   }
 }

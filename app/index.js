@@ -7,8 +7,7 @@ import { ActivityIndicator } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import Navigator from 'app/navigation';
-import configureStore from 'app/store/configureStore';
-const { persistor, store } = configureStore();
+import { store, persistor } from 'app/store/configureStore';
 
 export default class App extends Component {
     render() {
