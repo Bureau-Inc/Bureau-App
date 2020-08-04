@@ -51,7 +51,7 @@
 		539601ED7B7246E4A572F566 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 503890C8077C4426AC39CA60 /* NotoSans-Regular.ttf */; };
 		29C0B14E9CBA477FB096C7BD /* libRNNetworkInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B4CB13485C40CB995936C4 /* libRNNetworkInfo.a */; };
 		68DDDFC103044334BE929CFD /* libRNNetworkInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB67A6D25394E558AAC5FD1 /* libRNNetworkInfo-tvOS.a */; };
-		0BD59C2E8A7D4F48B1D38F5D /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2736D40E82F548D0A50DDACD /* libRNCWebView.a */; };
+		5B6637B4F20F422288839BBF /* libRNCClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E65D992457461A8E248DC4 /* libRNCClipboard.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -374,8 +374,8 @@
 		DAFE30A2133F4B6FB824BB4C /* RNNetworkInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNNetworkInfo.xcodeproj"; path = "../node_modules/react-native-network-info/ios/RNNetworkInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		A5B4CB13485C40CB995936C4 /* libRNNetworkInfo.a */ = {isa = PBXFileReference; name = "libRNNetworkInfo.a"; path = "libRNNetworkInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		5EB67A6D25394E558AAC5FD1 /* libRNNetworkInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNNetworkInfo-tvOS.a"; path = "libRNNetworkInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		277B756DBD2C43F89C03DE52 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; name = "RNCWebView.xcodeproj"; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		2736D40E82F548D0A50DDACD /* libRNCWebView.a */ = {isa = PBXFileReference; name = "libRNCWebView.a"; path = "libRNCWebView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1C2E7FCC74894765BCA1ECAB /* RNCClipboard.xcodeproj */ = {isa = PBXFileReference; name = "RNCClipboard.xcodeproj"; path = "../node_modules/@react-native-community/clipboard/ios/RNCClipboard.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		47E65D992457461A8E248DC4 /* libRNCClipboard.a */ = {isa = PBXFileReference; name = "libRNCClipboard.a"; path = "libRNCClipboard.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,7 +408,7 @@
 				22371D9DB62443DBA13149A7 /* libRNSVG.a in Frameworks */,
 				423E6EB1F06A44AB83266914 /* libBVLinearGradient.a in Frameworks */,
 				29C0B14E9CBA477FB096C7BD /* libRNNetworkInfo.a in Frameworks */,
-				0BD59C2E8A7D4F48B1D38F5D /* libRNCWebView.a in Frameworks */,
+				5B6637B4F20F422288839BBF /* libRNCClipboard.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +606,7 @@
 				3E677033AB1348509FFC3193 /* BVLinearGradient.xcodeproj */,
 				DAFE30A2133F4B6FB824BB4C /* RNNetworkInfo.xcodeproj */,
 				277B756DBD2C43F89C03DE52 /* RNCWebView.xcodeproj */,
+				1C2E7FCC74894765BCA1ECAB /* RNCClipboard.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1258,7 +1259,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
-					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Debug;
@@ -1288,7 +1289,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
-					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Release;
@@ -1315,7 +1316,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
-					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Debug;
@@ -1341,7 +1342,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
-					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Release;
@@ -1380,6 +1381,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Debug;
@@ -1418,6 +1420,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Release;
@@ -1455,6 +1458,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Debug;
@@ -1492,6 +1496,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 				);
 			};
 			name = Release;

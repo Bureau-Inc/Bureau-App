@@ -5,39 +5,65 @@ import PropTypes from 'prop-types';
 
 import { Button } from '../../components';
 import { BlueContainer } from '../../config/svgs';
+import { getPhoneNumberWithCountryCode, sleep } from '../../utils';
 import styles from './styles';
 import images from '../../config/images';
-import { getPhoneNumberWithCountryCode } from '../../utils/countryUtils';
 
 class LoginView extends Component {
     constructor(props) {
         super(props);
         this.state={
             phoneNumber: '8848062056',
-            isLoading: this.props.isLoginProcessing,
-            startInitiateCycle: false,
-            startFinalizeFlow: false,
+            isLoading: false
         };
     }
 
+    _initiateGenerateOtpFlow = async() => {
+        const response = await this.props.generateOtp(this.state.phoneNumber);
+        response.errorCode
+            ? Alert.alert('Error', response.errorDescription || response.response)
+            : this.props.showOtpScreen({ mVerificationId: response.mVerificationId });
+        this.setState({ isLoading: false });
+    }
+
+    _getUserInfo = async (correlationId) => {
+        let userInfo;
+        let count = 0;
+
+        do {
+            await sleep(3000);
+            userInfo = await this.props.getUserInfo(correlationId);
+            count = count + 1;
+        } while(userInfo && userInfo.status === '' && count < 5);
+        return userInfo;
+    }
+    
+
     _handleLoginClick = async () => {
         const userIp = await NetworkInfo.getIPAddress();
+        this.setState({ isLoading: true });
         const response =  await this.props.authDiscover(userIp);
         if(response && response.supported){
             const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), response.correlationId);
             const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
-            const userInfo = await this.props.getUserInfo(response.correlationId);
-            if(userInfo.mobileNumber === getPhoneNumberWithCountryCode('india', this.state.phoneNumber)){
+            // let userInfo;
+            // let count = 0;
+
+            // do {
+            //     await sleep(3000);
+            //     userInfo = await this.props.getUserInfo(response.correlationId);
+            //     count = count + 1;
+            // } while(userInfo && userInfo.status === '' && count < 5);
+
+            const userInfo = await this._getUserInfo(response.correlationId);
+
+            if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode('india', this.state.phoneNumber)){
                 this.props.showLoginSuccessfulScreen();
-            }
-            else {
-                Alert.alert('Error!', 'User Authentication Failed');
+                this.setState({ isLoading: false });
+                return;
             }
         }
-        else{
-            //INITIATE OTP CALL
-            Alert.alert('Authentication REquired!', 'Initiating OTP Call');
-        }
+        this._initiateGenerateOtpFlow();
     }
 
     render() {
@@ -80,13 +106,9 @@ class LoginView extends Component {
                                         style={styles.phoneNumber}
                                         onChangeText={onChangeText}
                                         value={this.state.phoneNumber}
+                                        editable={!(this.state.isLoading)}
                                     />
                                 </View>
-                            </View>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.text}>
-                            A 4 digit OTP will be sent as an SMS to verify your mobile number
-                                </Text>
                             </View>
                         </View>
                     </View>
@@ -105,12 +127,13 @@ class LoginView extends Component {
 }
 
 LoginView.propTypes = {
-    isLoginProcessing: PropTypes.bool,
     authDiscover: PropTypes.func,
     authInitiate: PropTypes.func,
     authFinalize: PropTypes.func,
     getUserInfo: PropTypes.func,
-    showLoginSuccessfulScreen: PropTypes.func
+    showLoginSuccessfulScreen: PropTypes.func,
+    showOtpScreen: PropTypes.func,
+    generateOtp: PropTypes.func
 };
 
 export default LoginView;

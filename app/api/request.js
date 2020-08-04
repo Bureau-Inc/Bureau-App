@@ -1,19 +1,17 @@
 import axios from 'axios';
 
 import { store } from '../store/configureStore';
-import { ENDPOINT_URL, AUTH_TOKEN } from '@env';
 
 // General api_call to access data
 export default async function invokeApi(payload) {
     const {
         options,
         actionTypes,
-        includeTokenInHeader = false
+        token = ''
     } = payload;
     const apiParams = {
         ...options,
-        baseURL: ENDPOINT_URL,
-        headers: includeTokenInHeader? getHeaders(AUTH_TOKEN): getHeaders('')
+        headers: getHeaders(token)
     };
     try {
         actionTypes.request && dispatchAction(actionTypes.request);

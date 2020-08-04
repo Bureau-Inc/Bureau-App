@@ -12,18 +12,19 @@ import {
     FINALIZE_REQUEST,
     FINALIZE_SUCCESS
 } from '../actions/types';
-import { CLIENT_ID, CALLBACK_URL } from '@env';
+import { AUTH_ENDPOINT_URL, AUTH_CLIENT_ID, CALLBACK_URL } from '@env';
 
 export async function authDiscover(userIp){
     const apiArgs = {
         options: {
             method: 'get',
             url: constants.DISCOVER,
+            baseURL: AUTH_ENDPOINT_URL,
             params: {
-                countryCode: 'india',
+                countryCode: 'IN',
                 correlationId: uuid(),
                 userIp,
-                clientId: CLIENT_ID
+                clientId: AUTH_CLIENT_ID
             }
         },
         actionTypes: {
@@ -41,10 +42,11 @@ export async function authInitiate(userIp, msisdn, correlationId){
         options: {
             method: 'get',
             url: constants.INITIATE,
+            baseURL: AUTH_ENDPOINT_URL,
             params: {
-                clientId: CLIENT_ID,
+                clientId: AUTH_CLIENT_ID,
                 callbackUrl: CALLBACK_URL,
-                countryCode: 'india',
+                countryCode: 'IN',
                 correlationId,
                 userIp,
                 msisdn
@@ -65,8 +67,9 @@ export async function authFinalize(correlationId){
         options: {
             method: 'get',
             url: constants.FINALIZE,
+            baseURL: AUTH_ENDPOINT_URL,
             params: {
-                clientId: CLIENT_ID,
+                clientId: AUTH_CLIENT_ID,
                 correlationId
             },
         },
@@ -74,26 +77,6 @@ export async function authFinalize(correlationId){
             request: FINALIZE_REQUEST,
             success: FINALIZE_SUCCESS,
             failure: FINALIZE_FAILURE
-        }
-    };
-    const response = await invokeApi(apiArgs);
-    return response;
-}
-
-export async function getUserInfo(correlationId){
-    const apiArgs = {
-        options: {
-            method: 'get',
-            url: '/userinfo',
-            params: {
-                correlationId
-            },
-        },
-        includeTokenInHeader: true,
-        actionTypes: {
-            request: 'USERINFO_REQUEST',
-            success: 'USERINFO_SUCCESS',
-            failure: 'USERINFO_FAILURE'
         }
     };
     const response = await invokeApi(apiArgs);

@@ -1,14 +1,22 @@
 import {
     authDiscover,
     authInitiate,
-    authFinalize,
-    getUserInfo
+    authFinalize
 } from './auth';
+import {
+    generateOtp,
+    verifyOtp
+} from './otp';
+import {
+    getUserInfo
+} from './userInfo';
 
 export {
     authDiscover,
     authInitiate,
     authFinalize,
-    getUserInfo
+    getUserInfo,
+    generateOtp,
+    verifyOtp
 };
 

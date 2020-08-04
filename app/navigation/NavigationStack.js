@@ -2,6 +2,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Login from 'app/screens/Login';
 import LoginSuccessful from 'app/screens/LoginSuccessful';
+import OtpScreen from 'app/screens/OTPVerification';
 
 const RNApp = createStackNavigator(
     {
@@ -11,6 +12,10 @@ const RNApp = createStackNavigator(
         },
         LoginSuccessful: {
             screen: LoginSuccessful,
+            navigationOptions: { header: null, gesturesEnabled: false }
+        },
+        OtpScreen: {
+            screen: OtpScreen,
             navigationOptions: { header: null, gesturesEnabled: false }
         }
     },

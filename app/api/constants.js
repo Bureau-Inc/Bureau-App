@@ -4,7 +4,7 @@ export default {
     DISCOVER: '/discover',
     INITIATE: '/initiate',
     FINALIZE: '/finalize',
-    INITIATE_CALL_TYPE: 'INITIATE',
-    FINALIZE_CALL_TYPE: 'FINALIZE'
+    OTP_GENERATE: '/otp',
+    OTP_VERIFY: '/verify'
 };
 

@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-start',
         flex: 1,
-        position: 'relative'
+        position: 'relative',
+
     },
     curveContainer: {
         alignItems: 'flex-end',
@@ -36,15 +37,18 @@ const styles = StyleSheet.create({
         height: 40,
         width: 120
     },
+    otp: {
+        backgroundColor: AppStyles.colors.WHITE,
+        color: AppStyles.colors.BLACK
+    },
     phoneNumber: {
         color:AppStyles.colors.BLACK,
         fontSize: 17
     },
     phoneNumberContainer: {
-        borderRadius: 5,
-        flexDirection: 'row',
         height: 48,
-        marginBottom: '15%',
+        justifyContent: 'center',
+        marginBottom: '5%',
         overflow: 'hidden',
         width:'100%'
     },
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     topContainer: {
         height: Dimensions.get('screen').height * 3/5,
         justifyContent: 'space-around',
-        padding: 25,
+        padding: Dimensions.get('screen').width * 1/12,
         width: '100%'
     }
 });

@@ -8,12 +8,20 @@ import AppStyles from '../../config/styles';
 class Button extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            isLoading: this.props.isLoading,
+            isDisabled: this.props.isDisabled
+        };
     }
-    render(){
-        const { customStyle, buttonText, onButtonPress, isLoading } = this.props;
-
+    render() {
+        const { customStyle, buttonText, onButtonPress, isLoading, isDisabled } = this.props;
         return(
-            <TouchableOpacity onPress={onButtonPress} style={[ styles.button, customStyle]} disabled={isLoading}>
+            <TouchableOpacity
+                onPress={onButtonPress}
+                style={[ styles.button, customStyle, (isLoading || isDisabled) && styles.disabledButton ]}
+                disabled={isLoading || isDisabled}
+                activeOpacity={0.1}
+            >
                 {
                     isLoading
                         ?   <ActivityIndicator size="small" color={AppStyles.colors.WHITE} />
@@ -23,17 +31,19 @@ class Button extends Component{
     }
 }
 
-Button.proptypes = {
+Button.propTypes = {
     buttonText: PropTypes.string,
     customStyle: PropTypes.shape(),
     onButtonPress: PropTypes.func,
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
+    isDisabled: PropTypes.bool
 };
 
 Button.defaultProps = {
     buttonText: '',
     customStyle: {},
     isLoading: false,
+    isDisabled: false,
     onButtonPress: () => {}
 };
 export default Button;

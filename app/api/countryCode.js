@@ -1,6 +1,6 @@
 /* Counrty Code details for api*/
 
-export default {
+export const countryCode = {
     'india': '91',
     'indonesia': '62'
 }; 
