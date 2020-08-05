@@ -13,7 +13,7 @@ class LoginView extends Component {
     constructor(props) {
         super(props);
         this.state={
-            phoneNumber: '8848062056',
+            phoneNumber: '',
             isLoading: false
         };
     }

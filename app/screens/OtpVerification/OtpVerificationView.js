@@ -19,7 +19,7 @@ class OtpVerificationView extends Component {
     _handleOtpVerification = async () => {
         const verificationResponse = await this.props.verifyOtp(this.state.otp, this.props.navigation.getParam('mVerificationId'));
         (verificationResponse.errorCode || !(verificationResponse.verification))
-            ? Alert.alert('Error', verificationResponse.response)
+            ? Alert.alert('Error', (verificationResponse.response || verificationResponse.errorDescription))
             : this.props.showLoginSuccessfulScreen();
     };
 

@@ -2,7 +2,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Login from 'app/screens/Login';
 import LoginSuccessful from 'app/screens/LoginSuccessful';
-import OtpScreen from 'app/screens/OTPVerification';
+import Otp from 'app/screens/OtpVerification';
 
 const RNApp = createStackNavigator(
     {
@@ -14,8 +14,8 @@ const RNApp = createStackNavigator(
             screen: LoginSuccessful,
             navigationOptions: { header: null, gesturesEnabled: false }
         },
-        OtpScreen: {
-            screen: OtpScreen,
+        Otp: {
+            screen: Otp,
             navigationOptions: { header: null, gesturesEnabled: false }
         }
     },
