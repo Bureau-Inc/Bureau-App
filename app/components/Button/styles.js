@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
         color: AppStyles.colors.WHITE,
         fontFamily: AppStyles.fonts.FONT_BOLD,
         fontSize: 17
+    },
+    disabledButton: {
+        opacity: 0.4
     }
 });
 

@@ -3,12 +3,13 @@ import LoginView from './LoginView';
 import { connect } from 'react-redux';
 
 import {
-    authDiscover as authDiscoverSaga,
-    authInitiate as authInitiateSaga,
-    authFinalize as authFinalizeSaga,
-    getUserInfo
+    authDiscover,
+    authInitiate,
+    authFinalize,
+    getUserInfo,
+    generateOtp
 } from '../../sagas';
-import { navigateToLoginSuccessful } from '../../actions/navigationActions';
+import { navigateToLoginSuccessful, navigateToOTP } from '../../actions/navigationActions';
 
 class LoginContainer extends Component {
     constructor(props) {
@@ -20,19 +21,18 @@ class LoginContainer extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => {
-    return { isLoginProcessing: auth.isLoginProcessing };
-};
 
 const mapDispatchToProps = () => ({
     showLoginSuccessfulScreen: navigateToLoginSuccessful,
-    authDiscover : authDiscoverSaga,
-    authInitiate: authInitiateSaga,
-    authFinalize: authFinalizeSaga,
-    getUserInfo
+    showOtpScreen: navigateToOTP,
+    authDiscover,
+    authInitiate,
+    authFinalize,
+    getUserInfo,
+    generateOtp
 });
     
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 )(LoginContainer);
