@@ -52,6 +52,7 @@
 		29C0B14E9CBA477FB096C7BD /* libRNNetworkInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B4CB13485C40CB995936C4 /* libRNNetworkInfo.a */; };
 		68DDDFC103044334BE929CFD /* libRNNetworkInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB67A6D25394E558AAC5FD1 /* libRNNetworkInfo-tvOS.a */; };
 		5B6637B4F20F422288839BBF /* libRNCClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E65D992457461A8E248DC4 /* libRNCClipboard.a */; };
+		55C5E5937F984F7C89E37790 /* libRNGetRandomValues.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF45217B46DF49F5AF6758C9 /* libRNGetRandomValues.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -376,6 +377,8 @@
 		5EB67A6D25394E558AAC5FD1 /* libRNNetworkInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNNetworkInfo-tvOS.a"; path = "libRNNetworkInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		1C2E7FCC74894765BCA1ECAB /* RNCClipboard.xcodeproj */ = {isa = PBXFileReference; name = "RNCClipboard.xcodeproj"; path = "../node_modules/@react-native-community/clipboard/ios/RNCClipboard.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		47E65D992457461A8E248DC4 /* libRNCClipboard.a */ = {isa = PBXFileReference; name = "libRNCClipboard.a"; path = "libRNCClipboard.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		76DDD66C084F4D618F3C6230 /* RNGetRandomValues.xcodeproj */ = {isa = PBXFileReference; name = "RNGetRandomValues.xcodeproj"; path = "../node_modules/react-native-get-random-values/ios/RNGetRandomValues.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		CF45217B46DF49F5AF6758C9 /* libRNGetRandomValues.a */ = {isa = PBXFileReference; name = "libRNGetRandomValues.a"; path = "libRNGetRandomValues.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -409,6 +412,7 @@
 				423E6EB1F06A44AB83266914 /* libBVLinearGradient.a in Frameworks */,
 				29C0B14E9CBA477FB096C7BD /* libRNNetworkInfo.a in Frameworks */,
 				5B6637B4F20F422288839BBF /* libRNCClipboard.a in Frameworks */,
+				55C5E5937F984F7C89E37790 /* libRNGetRandomValues.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +611,7 @@
 				DAFE30A2133F4B6FB824BB4C /* RNNetworkInfo.xcodeproj */,
 				277B756DBD2C43F89C03DE52 /* RNCWebView.xcodeproj */,
 				1C2E7FCC74894765BCA1ECAB /* RNCClipboard.xcodeproj */,
+				76DDD66C084F4D618F3C6230 /* RNGetRandomValues.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1260,6 +1265,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Debug;
@@ -1290,6 +1296,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Release;
@@ -1317,6 +1324,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Debug;
@@ -1343,6 +1351,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Release;
@@ -1382,6 +1391,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Debug;
@@ -1421,6 +1431,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Release;
@@ -1459,6 +1470,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Debug;
@@ -1497,6 +1509,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
+					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
 				);
 			};
 			name = Release;

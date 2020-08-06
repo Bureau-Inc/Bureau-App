@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TextInput, Image, Text, Alert } from 'react-native';
 import { NetworkInfo } from 'react-native-network-info';
 import PropTypes from 'prop-types';
+import publicIP from 'react-native-public-ip';
 
 import { Button } from '../../components';
 import { BlueContainer } from '../../config/svgs';
@@ -14,7 +15,11 @@ class LoginView extends Component {
         super(props);
         this.state={
             phoneNumber: '',
-            isLoading: false
+            isLoading: false,
+            userIp: '',
+            authInitiateResponse: '',
+            authFinalizeResponse: '',
+            correlationId: ''
         };
     }
 
@@ -40,12 +45,21 @@ class LoginView extends Component {
     
 
     _handleLoginClick = async () => {
-        const userIp = await NetworkInfo.getIPAddress();
         this.setState({ isLoading: true });
+        const userIp = await publicIP();
+        this.setState({ userIp });
         const response =  await this.props.authDiscover(userIp);
         if(response && response.supported){
-            const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), response.correlationId);
-            const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
+            // const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), response.correlationId);
+            // const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
+            this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), response.correlationId).then(
+                async (authInitiateResponse) => {
+                    this.setState({ authInitiateResponse});
+                    const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
+                    this.setState({ authFinalizeResponse });
+                }
+            );
+            this.setState({ correlationId: response.correlationId });
             // let userInfo;
             // let count = 0;
 
@@ -110,6 +124,8 @@ class LoginView extends Component {
                                     />
                                 </View>
                             </View>
+                            <View><Text>{this.state.userIp}</Text></View>
+        <View><Text>authInitiate: {this.state.authInitiateResponse}, authFinalize{this.state.authFinalizeResponse}, correlationId: {this.state.correlationId}</Text></View>
                         </View>
                     </View>
                     <View style={styles.buttonContainer}>
