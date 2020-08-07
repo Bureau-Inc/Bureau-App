@@ -1,6 +1,5 @@
-import { getPhoneNumberWithCountryCode, sleep } from './utils';
+import { getPhoneNumberWithCountryCode } from './utils';
 
 export {
     getPhoneNumberWithCountryCode,
-    sleep
 };

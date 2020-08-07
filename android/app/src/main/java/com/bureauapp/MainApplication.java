@@ -3,7 +3,7 @@ package com.bureauapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.pusherman.networkinfo.RNNetworkInfoPackage;
+import org.linusu.RNGetRandomValuesPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -27,7 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNNetworkInfoPackage(),
+            new RNGetRandomValuesPackage(),
             new SvgPackage(),
             new RNGestureHandlerPackage(),
             new ClipboardPackage()

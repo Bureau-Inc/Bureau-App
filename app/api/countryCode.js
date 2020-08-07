@@ -1,6 +1,6 @@
 /* Counrty Code details for api*/
 
-export const countryCode = {
-    'india': '91',
-    'indonesia': '62'
+export const countryCodes = {
+    'IN': '91',
+    'ID': '62'
 }; 

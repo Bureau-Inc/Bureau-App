@@ -8,5 +8,5 @@ export function navigateToLoginSuccessful({...params}) {
 }
 
 export function navigateToOTP(params) {
-    NavigationService.navigate('OtpScreen', params);
+    NavigationService.navigate('Otp', params);
 }

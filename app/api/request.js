@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 import { store } from '../store/configureStore';
+import { USERINFO_FAILURE } from '../actions/types';
 
 // General api_call to access data
-export default async function invokeApi(payload) {
+export default async function invokeApi(payload, rethrowError = false) {
     const {
         options,
         actionTypes,
@@ -22,6 +23,9 @@ export default async function invokeApi(payload) {
         }
     } catch (err) {
         actionTypes.failure && dispatchAction(actionTypes.failure);
+        if(rethrowError){
+            throw(err);
+        }
     }
     return null;
 }
@@ -30,7 +34,7 @@ const getHeaders = (token) => {
     return {
         Accept: 'application/json',
         Authorization: token,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
     };
 };
 

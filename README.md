@@ -18,7 +18,7 @@ Assuming you have all the requirements installed, you can setup and run the proj
 
 - `npm install` to install the dependencies
 - `npx jetify`
-- `npx react-native link` to link assets
+- `npm run link` to link assets
 - run the following steps for your platform
 
 #### Android
