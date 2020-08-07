@@ -101,6 +101,17 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        release {
+            if (project.hasProperty('BUREAU_RELEASE_STORE_FILE')) {
+                storeFile file(BUREAU_RELEASE_STORE_FILE)
+                storePassword BUREAU_RELEASE_STORE_PASSWORD
+                keyAlias BUREAU_RELEASE_KEY_ALIAS
+                keyPassword BUREAU_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
     defaultConfig {
         applicationId "com.bureauapp"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -128,6 +139,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
@@ -150,7 +162,6 @@ android {
 
 dependencies {
     implementation project(':react-native-get-random-values')
-    implementation project(':react-native-network-info')
     implementation project(':react-native-svg')
     implementation project(':@react-native-community_clipboard')
     implementation project(':react-native-gesture-handler')

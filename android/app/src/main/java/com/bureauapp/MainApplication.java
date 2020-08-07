@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import org.linusu.RNGetRandomValuesPackage;
-import com.pusherman.networkinfo.RNNetworkInfoPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -29,7 +28,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNGetRandomValuesPackage(),
-            new RNNetworkInfoPackage(),
             new SvgPackage(),
             new RNGestureHandlerPackage(),
             new ClipboardPackage()

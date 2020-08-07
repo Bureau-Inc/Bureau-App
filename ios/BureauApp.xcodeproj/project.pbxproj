@@ -53,6 +53,7 @@
 		68DDDFC103044334BE929CFD /* libRNNetworkInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB67A6D25394E558AAC5FD1 /* libRNNetworkInfo-tvOS.a */; };
 		5B6637B4F20F422288839BBF /* libRNCClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E65D992457461A8E248DC4 /* libRNCClipboard.a */; };
 		55C5E5937F984F7C89E37790 /* libRNGetRandomValues.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF45217B46DF49F5AF6758C9 /* libRNGetRandomValues.a */; };
+		C83818E9766D4C8E9B8B0F1F /* libRNCPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9E13EBB3A04629ADF128DD /* libRNCPicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -379,6 +380,8 @@
 		47E65D992457461A8E248DC4 /* libRNCClipboard.a */ = {isa = PBXFileReference; name = "libRNCClipboard.a"; path = "libRNCClipboard.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		76DDD66C084F4D618F3C6230 /* RNGetRandomValues.xcodeproj */ = {isa = PBXFileReference; name = "RNGetRandomValues.xcodeproj"; path = "../node_modules/react-native-get-random-values/ios/RNGetRandomValues.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		CF45217B46DF49F5AF6758C9 /* libRNGetRandomValues.a */ = {isa = PBXFileReference; name = "libRNGetRandomValues.a"; path = "libRNGetRandomValues.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		75D2C17FFE2E4D67B57F9D2C /* RNCPicker.xcodeproj */ = {isa = PBXFileReference; name = "RNCPicker.xcodeproj"; path = "../node_modules/@react-native-community/picker/ios/RNCPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		8E9E13EBB3A04629ADF128DD /* libRNCPicker.a */ = {isa = PBXFileReference; name = "libRNCPicker.a"; path = "libRNCPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +416,7 @@
 				29C0B14E9CBA477FB096C7BD /* libRNNetworkInfo.a in Frameworks */,
 				5B6637B4F20F422288839BBF /* libRNCClipboard.a in Frameworks */,
 				55C5E5937F984F7C89E37790 /* libRNGetRandomValues.a in Frameworks */,
+				C83818E9766D4C8E9B8B0F1F /* libRNCPicker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +616,7 @@
 				277B756DBD2C43F89C03DE52 /* RNCWebView.xcodeproj */,
 				1C2E7FCC74894765BCA1ECAB /* RNCClipboard.xcodeproj */,
 				76DDD66C084F4D618F3C6230 /* RNGetRandomValues.xcodeproj */,
+				75D2C17FFE2E4D67B57F9D2C /* RNCPicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1257,6 +1262,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1266,6 +1272,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Debug;
@@ -1288,6 +1295,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1297,6 +1305,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Release;
@@ -1325,6 +1334,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Debug;
@@ -1352,6 +1362,7 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Release;
@@ -1382,6 +1393,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1392,6 +1404,7 @@
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Debug;
@@ -1422,6 +1435,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1432,6 +1446,7 @@
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Release;
@@ -1461,6 +1476,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1471,6 +1487,7 @@
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Debug;
@@ -1500,6 +1517,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1510,6 +1528,7 @@
 					"$(SRCROOT)/../node_modules/react-native-webview/apple/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/clipboard/ios",
 					"$(SRCROOT)/../node_modules/react-native-get-random-values/ios",
+					"$(SRCROOT)/../node_modules/@react-native-community/picker/ios/**",
 				);
 			};
 			name = Release;

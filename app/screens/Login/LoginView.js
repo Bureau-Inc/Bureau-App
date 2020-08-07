@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
 import { View, TextInput, Image, Text, Alert } from 'react-native';
-import { NetworkInfo } from 'react-native-network-info';
 import PropTypes from 'prop-types';
 import publicIP from 'react-native-public-ip';
+import 'react-native-get-random-values';
+import { v4 as uuid } from 'uuid';
 
 import { Button } from '../../components';
 import { BlueContainer } from '../../config/svgs';
-import { getPhoneNumberWithCountryCode, sleep } from '../../utils';
+import { getPhoneNumberWithCountryCode } from '../../utils';
 import styles from './styles';
 import images from '../../config/images';
+
 
 class LoginView extends Component {
     constructor(props) {
         super(props);
         this.state={
             phoneNumber: '',
-            isLoading: false,
-            userIp: '',
-            authInitiateResponse: '',
-            authFinalizeResponse: '',
-            correlationId: ''
+            isLoading: false
         };
     }
-
     _initiateGenerateOtpFlow = async() => {
         const response = await this.props.generateOtp(this.state.phoneNumber);
         response.errorCode
@@ -31,51 +28,48 @@ class LoginView extends Component {
         this.setState({ isLoading: false });
     }
 
-    _getUserInfo = async (correlationId) => {
-        let userInfo;
-        let count = 0;
+    callGetUserInfo = async (correlationId, pollingTime) => new Promise((res,reject) => {
+        setTimeout( async() => {
+            try{
+                const userInfo = await this.props.getUserInfo(correlationId);
+                res(userInfo);
+            }catch(err){
+                reject(err);
+            }
+        }, pollingTime);
+    })
 
+    _getUserInfo = async(correlationId) => {
+        let userInfo;
+        let pollingTime = 0;
+        let currentDate =  new Date();
+        let retry = false;
         do {
-            await sleep(3000);
-            userInfo = await this.props.getUserInfo(correlationId);
-            count = count + 1;
-        } while(userInfo && userInfo.status === '' && count < 5);
+            retry = false;
+            try{
+                userInfo = await this.callGetUserInfo(correlationId, pollingTime);
+            }
+            catch(err){
+                retry = true;
+            }
+            if(pollingTime === 0) pollingTime = 100;
+        }while(((userInfo && userInfo.status === '') || retry === true) && (new Date()).getTime() - currentDate.getTime() < 3000);
+        if(retry === true)
+            return null;
         return userInfo;
     }
-    
 
     _handleLoginClick = async () => {
         this.setState({ isLoading: true });
+        const correlationId = uuid();
         const userIp = await publicIP();
-        this.setState({ userIp });
-        const response =  await this.props.authDiscover(userIp);
-        if(response && response.supported){
-            // const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), response.correlationId);
-            // const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
-            this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), response.correlationId).then(
-                async (authInitiateResponse) => {
-                    this.setState({ authInitiateResponse});
-                    const authFinalizeResponse = await this.props.authFinalize(response.correlationId);
-                    this.setState({ authFinalizeResponse });
-                }
-            );
-            this.setState({ correlationId: response.correlationId });
-            // let userInfo;
-            // let count = 0;
-
-            // do {
-            //     await sleep(3000);
-            //     userInfo = await this.props.getUserInfo(response.correlationId);
-            //     count = count + 1;
-            // } while(userInfo && userInfo.status === '' && count < 5);
-
-            const userInfo = await this._getUserInfo(response.correlationId);
-
-            if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode('india', this.state.phoneNumber)){
-                this.props.showLoginSuccessfulScreen();
-                this.setState({ isLoading: false });
-                return;
-            }
+        const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode('india', this.state.phoneNumber), correlationId);
+        const authFinalizeResponse = await this.props.authFinalize(correlationId);
+        const userInfo = await this._getUserInfo(correlationId);
+        if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode('india', this.state.phoneNumber)){
+            this.props.showLoginSuccessfulScreen();
+            this.setState({ isLoading: false });
+            return;
         }
         this._initiateGenerateOtpFlow();
     }
@@ -105,13 +99,13 @@ class LoginView extends Component {
                                 </Text>
                             </View>
                             <View style={styles.phoneNumberContainer}>
-                                <View style={styles.phoneNumberPrefixContainer}>
+                                 <View style={styles.phoneNumberPrefixContainer}>
                                     <TextInput
                                         editable={false}
                                         value={'+91'} 
                                         style={styles.phoneNumber}
                                     />
-                                </View>
+                                </View> 
                                 <View style={styles.phoneNumberInputContainer}>
                                     <TextInput
                                         maxLength={10}
@@ -124,8 +118,7 @@ class LoginView extends Component {
                                     />
                                 </View>
                             </View>
-                            <View><Text>{this.state.userIp}</Text></View>
-        <View><Text>authInitiate: {this.state.authInitiateResponse}, authFinalize{this.state.authFinalizeResponse}, correlationId: {this.state.correlationId}</Text></View>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.buttonContainer}>

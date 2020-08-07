@@ -21,6 +21,6 @@ export async function getUserInfo(correlationId){
             failure: USERINFO_FAILURE
         }
     };
-    const response = await invokeApi(apiArgs);
+    const response = await invokeApi(apiArgs, true);
     return response;
 }
