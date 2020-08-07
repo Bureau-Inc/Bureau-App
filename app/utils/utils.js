@@ -1,5 +1,10 @@
-import { countryCode } from '../api/countryCode';
+import { countryCodes } from '../api';
 
-export const getPhoneNumberWithCountryCode = (country, phoneNumber) => `${getCountryCode(country)}${phoneNumber}`;
+export const getPhoneNumberWithCountryCode = (countryCode, phoneNumber) => `${countryCode}${phoneNumber}`;
 
-const getCountryCode = (country) => countryCode[country.toLowerCase()];
+export const getCountrylabels = () => {
+    let labels = [];
+    Object.keys(countryCodes).forEach( country => 
+        labels.push({ label: country, value: countryCodes[country] }));           
+    return labels;
+};

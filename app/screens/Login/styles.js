@@ -28,6 +28,20 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: '150%'
     },
+    dropDownContainer: {
+        height: 48,
+        width: '15%'
+    },
+    dropDownItem: {
+        justifyContent: 'center'
+    },
+    dropDownLabel:{
+        color: AppStyles.colors.BLACK
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
     logo: {
         height: '100%',
         width: '100%'
@@ -46,13 +60,13 @@ const styles = StyleSheet.create({
         height: 48,
         marginBottom: '15%',
         overflow: 'hidden',
-        width:'100%'
+        width:'80%'
     },
     phoneNumberInputContainer: {
         backgroundColor: AppStyles.colors.WHITE,
         height: '100%',
         padding: 2,
-        width:'85%'
+        width:'80%'
     },
     phoneNumberPrefixContainer: {
         alignItems: 'center',
@@ -60,7 +74,7 @@ const styles = StyleSheet.create({
         borderRightWidth: 1,
         height: '100%',
         padding: 2,
-        width: '15%'
+        width: '20%'
     },
     text: {
         color: AppStyles.colors.WHITE,

@@ -16,14 +16,14 @@ import {
 } from '../actions/types';
 import { AUTH_ENDPOINT_URL, AUTH_CLIENT_ID, CALLBACK_URL } from '@env';
 
-export async function authDiscover(userIp){
+export async function authDiscover(userIp, countryCode){
     const apiArgs = {
         options: {
             method: 'get',
             url: constants.DISCOVER,
             baseURL: AUTH_ENDPOINT_URL,
             params: {
-                countryCode: 'IN',
+                countryCode: countryCode,
                 correlationId: uuid(),
                 userIp,
                 clientId: AUTH_CLIENT_ID
@@ -39,7 +39,7 @@ export async function authDiscover(userIp){
     return response;
 }
 
-export async function authInitiate(userIp, msisdn, correlationId){
+export async function authInitiate(userIp, msisdn, correlationId, countryCode){
     const apiArgs = {
         options: {
             method: 'get',
@@ -48,7 +48,7 @@ export async function authInitiate(userIp, msisdn, correlationId){
             params: {
                 clientId: AUTH_CLIENT_ID,
                 callbackUrl: CALLBACK_URL,
-                countryCode: 'IN',
+                countryCode: countryCode,
                 correlationId,
                 userIp,
                 msisdn

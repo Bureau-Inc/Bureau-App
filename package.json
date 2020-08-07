@@ -18,6 +18,7 @@
     "react": "16.8.3",
     "react-native": "0.59.4",
     "react-native-dotenv": "^2.2.3",
+    "react-native-dropdown-picker": "^3.1.11",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-get-random-values": "^1.4.0",
     "react-native-public-ip": "^1.0.2",
