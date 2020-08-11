@@ -11,6 +11,7 @@ import { BlueContainer } from '../../config/svgs';
 import { getPhoneNumberWithCountryCode, getCountrylabels } from '../../utils';
 import styles from './styles';
 import images from '../../config/images';
+import axios from 'axios';
 
 
 class LoginView extends Component {
@@ -20,7 +21,12 @@ class LoginView extends Component {
             phoneNumber: '',
             isLoading: false,
             countryCodeLabels: getCountrylabels(),
-            selectedCountryCode: getCountrylabels()[0]
+            selectedCountryCode: getCountrylabels()[0],
+            userIp: '',
+            authInitiateResponse: ',',
+            authFinalizeResponse: '',
+            userInfo: '',
+            correlationId: ''
 
         };
     }
@@ -66,10 +72,18 @@ class LoginView extends Component {
     _handleLoginClick = async () => {
         this.setState({ isLoading: true });
         const correlationId = uuid();
-        const userIp = await publicIP();
+        //const userIp = (await axios.get('https://api.ipify.org')).data;
+        const userIp = '223.228.143.23';
+        console.log(userIp);
+        this.setState({ userIp });
         const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber), correlationId, this.state.selectedCountryCode.label);
+        this.setState({authInitiateResponse});
         const authFinalizeResponse = await this.props.authFinalize(correlationId);
+        this.setState({ authFinalizeResponse });
+        this.setState({ correlationId });
         const userInfo = await this._getUserInfo(correlationId);
+        this.setState({ userInfo });
+        
         if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber)){
             this.props.showLoginSuccessfulScreen();
             this.setState({ isLoading: false });
@@ -135,6 +149,13 @@ class LoginView extends Component {
                                     </View>
                                 </View>
                             </View>
+
+                            <View><Text>userIp: {this.state.userIp}</Text></View>
+                            <View><Text>authInitiateResponse{JSON.stringify(this.state.authInitiateResponse)}</Text></View>
+                            <View><Text>authFinalizeResponse{JSON.stringify(this.state.authFinalizeResponse)}</Text></View>
+                            <View><Text>userINfo: {JSON.stringify(this.state.userInfo)}</Text></View>
+                            <View><TextInput editable={true}
+                                value={`${this.state.correlationId}`} /></View>
                         </View>
                     </View>
                     <View style={styles.buttonContainer}>
