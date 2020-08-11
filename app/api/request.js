@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { store } from '../store/configureStore';
-import { USERINFO_FAILURE } from '../actions/types';
 
 // General api_call to access data
 export default async function invokeApi(payload, rethrowError = false) {

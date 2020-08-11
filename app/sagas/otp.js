@@ -10,7 +10,7 @@ import {
     OTP_VERIFY_FAILURE
 } from '../actions/types';
 
-export async function generateOtp(mobileNumber){
+export async function generateOtp(mobileNumber, country){
     const apiArgs = {
         options: {
             method: 'get',
@@ -18,7 +18,8 @@ export async function generateOtp(mobileNumber){
             baseURL: OTP_ENDPOINT_URL,
             params: {
                 clientId: OTP_CLIENT_ID,
-                mobileNumber
+                mobileNumber,
+                country
             },
         },
         token: OTP_TOKEN,
