@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, Text, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import RNOtpVerify from 'react-native-otp-verify';
 
 import { Button } from '../../components';
 import { BlueContainer } from '../../config/svgs';
@@ -13,11 +14,40 @@ class OtpVerificationView extends Component {
         super(props);
         this.state={
             otp: '',
-            isOtpFilled: false
+            isOtpFilled: false,
+            mVerificationId: ''
         };
     }
+    async componentDidMount(){
+        this.setListenerForOtp();
+        const generateOtpResponse = await this.props.generateOtp(this.props.navigation.getParam('phoneNumber'), this.props.navigation.getParam('country'));
+        if((!generateOtpResponse) ||  generateOtpResponse.errorCode)
+            Alert.alert('Error', (generateOtpResponse && (generateOtpResponse.errorDescription || generateOtpResponse.response)) || 'Something went wrong');
+        else
+            this.setState({ mVerificationId: generateOtpResponse.mVerificationId });
+    }
+
+    componentWillUnmount(){
+        RNOtpVerify.removeListener();
+    }
+    setListenerForOtp = () =>
+        RNOtpVerify.getOtp()
+            .then(p => RNOtpVerify.addListener(this.otpHandler))
+            .catch(p => { /*todo*/ });
+
+    otpHandler = (message) => {
+        try{
+            const otp = /(\d{6})/g.exec(message)[1];
+            this.setState({ otp, isOtpFilled: true });
+            RNOtpVerify.removeListener();
+            this._handleOtpVerification();
+        }
+        catch(err){
+            //handleError
+        }
+    };
     _handleOtpVerification = async () => {
-        const verificationResponse = await this.props.verifyOtp(this.state.otp, this.props.navigation.getParam('mVerificationId'));
+        const verificationResponse = await this.props.verifyOtp(this.state.otp, this.state.mVerificationId);
         (verificationResponse.errorCode || !(verificationResponse.verification))
             ? Alert.alert('Error', (verificationResponse.response || verificationResponse.errorDescription))
             : this.props.showLoginSuccessfulScreen();
@@ -47,6 +77,7 @@ class OtpVerificationView extends Component {
                             </View>
                             <View style={styles.phoneNumberContainer}>
                                 <OTPInputView
+                                    code={this.state.otp}
                                     pinCount={6}
                                     autoFocusOnLoad
                                     codeInputFieldStyle={styles.otp}
@@ -78,7 +109,8 @@ class OtpVerificationView extends Component {
 OtpVerificationView.propTypes = {
     navigation: PropTypes.any,
     verifyOtp: PropTypes.func,
-    showLoginSuccessfulScreen: PropTypes.func
+    showLoginSuccessfulScreen: PropTypes.func,
+    generateOtp: PropTypes.func
 };
 
 export default OtpVerificationView;

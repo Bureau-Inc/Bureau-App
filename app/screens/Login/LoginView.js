@@ -24,13 +24,6 @@ class LoginView extends Component {
 
         };
     }
-    _initiateGenerateOtpFlow = async() => {
-        const response = await this.props.generateOtp(this.state.phoneNumber, this.state.selectedCountryCode.label);
-        (!response) ||  response.errorCode
-            ? Alert.alert('Error', (response && (response.errorDescription || response.response)) || 'Something Went Wrong')
-            : this.props.showOtpScreen({ mVerificationId: response.mVerificationId });
-        this.setState({ isLoading: false });
-    }
 
     callGetUserInfo = async (correlationId, pollingTime) => new Promise((res,reject) => {
         setTimeout( async() => {
@@ -75,7 +68,7 @@ class LoginView extends Component {
             this.setState({ isLoading: false });
             return;
         }
-        this._initiateGenerateOtpFlow();
+        this.props.showOtpScreen({ phoneNumber: this.state.phoneNumber, country: this.state.selectedCountryCode.label });
     }
 
     render() {
@@ -157,8 +150,7 @@ LoginView.propTypes = {
     authFinalize: PropTypes.func,
     getUserInfo: PropTypes.func,
     showLoginSuccessfulScreen: PropTypes.func,
-    showOtpScreen: PropTypes.func,
-    generateOtp: PropTypes.func
+    showOtpScreen: PropTypes.func
 };
 
 export default LoginView;
