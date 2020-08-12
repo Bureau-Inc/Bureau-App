@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
+import com.faizal.OtpVerify.RNOtpVerifyPackage;
 import org.linusu.RNGetRandomValuesPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnativecommunity.clipboard.ClipboardPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNOtpVerifyPackage(),
             new RNGetRandomValuesPackage(),
             new SvgPackage(),
             new RNGestureHandlerPackage(),
