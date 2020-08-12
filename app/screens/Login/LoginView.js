@@ -83,7 +83,7 @@ class LoginView extends Component {
             //     correlationId,
             //     this.state.selectedCountryCode.label
             // );
-            const url1 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=919995632211&correlationId=${correlationId}`;
+            const url1 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=91${this.state.phoneNumber}&correlationId=${correlationId}`;
             const authInitiateResponse = await NetworkModule.get(url1);
             console.log('bureauapp-',authInitiateResponse);
 
