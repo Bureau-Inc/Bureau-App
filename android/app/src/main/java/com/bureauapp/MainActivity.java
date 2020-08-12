@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -24,6 +25,8 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy); 
         mNetworkReceiver = new NetworkReceiver();
         registerNetworkReceiver();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

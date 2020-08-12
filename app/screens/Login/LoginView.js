@@ -27,8 +27,8 @@ class LoginView extends Component {
             authInitiateResponse: ',',
             authFinalizeResponse: '',
             userInfo: '',
-            correlationId: ''
-
+            correlationId: '',
+            error: ''
         };
     }
     _initiateGenerateOtpFlow = async() => {
@@ -103,6 +103,7 @@ class LoginView extends Component {
             }
             this._initiateGenerateOtpFlow();
         } catch(error) {
+            this.setState({ isLoading: false, error });
             console.log(error);
         }
     }
@@ -169,6 +170,7 @@ class LoginView extends Component {
                             <View><Text>authInitiateResponse{JSON.stringify(this.state.authInitiateResponse)}</Text></View>
                             <View><Text>authFinalizeResponse{JSON.stringify(this.state.authFinalizeResponse)}</Text></View>
                             <View><Text>userINfo: {JSON.stringify(this.state.userInfo)}</Text></View>
+                            <View><Text>error: {JSON.stringify(this.state.error)}</Text></View>
                             <View><TextInput editable={true}
                                 value={`${this.state.correlationId}`} /></View>
                         </View>
