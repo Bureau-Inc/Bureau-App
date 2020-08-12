@@ -88,7 +88,7 @@ class LoginView extends Component {
             console.log('bureauapp-',authInitiateResponse);
 
             // const authFinalizeResponse = await this.props.authFinalize(correlationId);
-            const url2 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=919995632211&correlationId=${correlationId}`;
+            const url2 = `https://api.bureau.id/v2/auth/finalize?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&correlationId=${correlationId}`;
             const authFinalizeResponse = await NetworkModule.get(url2);
             console.log('bureauapp-',authFinalizeResponse);
             

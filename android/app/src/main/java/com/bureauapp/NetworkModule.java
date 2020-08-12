@@ -62,43 +62,29 @@ public class NetworkModule extends ReactContextBaseJavaModule {
     public void connectToAvailableNetwork(String url, Promise promise) {
         ConnectivityManager connectivityManager =  (ConnectivityManager)
                 reactContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkRequest request = new NetworkRequest.Builder()
-                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build();
-
-        connectivityManager.requestNetwork(request, new ConnectivityManager.NetworkCallback() {
-
-            @Override
-            public void onAvailable(final Network network) {
-                Toast.makeText(reactContext, "Mobile data available", Toast.LENGTH_SHORT).show();
-                final NetworkInfo netInfo = connectivityManager.getNetworkInfo(network);
-                if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                    try {
-                        NetworkModule.this.initializeRequest(network, url, promise);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        // do remove callback. if you forget to remove it, you will received callback when cellular connect again.
-                        connectivityManager.unregisterNetworkCallback(this);
-                    }
-                }
-
+        Network[] networks = connectivityManager.getAllNetworks();
+        Network mobileNetwork = null;
+        Network wifiNetwork = null;
+        for (final Network network : networks) {
+            final NetworkInfo netInfo = connectivityManager.getNetworkInfo(network);
+            if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                mobileNetwork = network;
+                break;
+            } else if (netInfo.getType() == ConnectivityManager.TYPE_WIFI && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                wifiNetwork = network;
             }
-
-            @Override
-            public void onLost(Network network) {
-                super.onLost(network);
-                Toast.makeText(reactContext, "Mobile data lost", Toast.LENGTH_SHORT).show();
+        }
+        try {
+            if (mobileNetwork != null) {
+                this.initializeRequest(mobileNetwork, url, promise);
+            } else if (wifiNetwork != null) {
+                this.initializeRequest(wifiNetwork, url, promise);
+            } else {
                 promise.reject(new Exception());
             }
-
-            @Override
-            public void onUnavailable() {
-                super.onUnavailable();
-                Toast.makeText(reactContext, "Mobile data not available", Toast.LENGTH_SHORT).show();
-                promise.reject(new Exception());
-            }
-        });
+        } catch(Exception exception) {
+            promise.reject(exception);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
