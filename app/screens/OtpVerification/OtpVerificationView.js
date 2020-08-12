@@ -26,6 +26,10 @@ class OtpVerificationView extends Component {
         else
             this.setState({ mVerificationId: generateOtpResponse.mVerificationId });
     }
+
+    componentWillUnmount(){
+        RNOtpVerify.removeListener();
+    }
     setListenerForOtp = () =>
         RNOtpVerify.getOtp()
             .then(p => RNOtpVerify.addListener(this.otpHandler))
