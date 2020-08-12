@@ -3,6 +3,7 @@ package com.bureauapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 import org.linusu.RNGetRandomValuesPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnativecommunity.clipboard.ClipboardPackage;
@@ -30,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGetRandomValuesPackage(),
             new SvgPackage(),
             new RNGestureHandlerPackage(),
-            new ClipboardPackage()
+            new ClipboardPackage(),
+            new RNCWebViewPackage()
       );
     }
 
