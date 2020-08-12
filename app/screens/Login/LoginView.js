@@ -12,6 +12,7 @@ import { getPhoneNumberWithCountryCode, getCountrylabels } from '../../utils';
 import styles from './styles';
 import images from '../../config/images';
 import axios from 'axios';
+import NetworkModule from '../../utils/network-module/network-module';
 
 
 class LoginView extends Component {
@@ -72,24 +73,38 @@ class LoginView extends Component {
     _handleLoginClick = async () => {
         this.setState({ isLoading: true });
         const correlationId = uuid();
-        //const userIp = (await axios.get('https://api.ipify.org')).data;
-        const userIp = '223.228.143.23';
-        console.log(userIp);
-        this.setState({ userIp });
-        const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber), correlationId, this.state.selectedCountryCode.label);
-        this.setState({authInitiateResponse});
-        const authFinalizeResponse = await this.props.authFinalize(correlationId);
-        this.setState({ authFinalizeResponse });
-        this.setState({ correlationId });
-        const userInfo = await this._getUserInfo(correlationId);
-        this.setState({ userInfo });
-        
-        if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber)){
-            this.props.showLoginSuccessfulScreen();
-            this.setState({ isLoading: false });
-            return;
+        try {
+            //const userIp = (await axios.get('https://api.ipify.org')).data;
+            const userIp = await NetworkModule.get('https://api.ipify.org');
+
+            // const authInitiateResponse = await this.props.authInitiate(
+            //     userIp, 
+            //     getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber),
+            //     correlationId,
+            //     this.state.selectedCountryCode.label
+            // );
+            const url1 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=919995632211&correlationId=${correlationId}`;
+            const authInitiateResponse = await NetworkModule.get(url1);
+            console.log('bureauapp-',authInitiateResponse);
+
+            // const authFinalizeResponse = await this.props.authFinalize(correlationId);
+            const url2 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=919995632211&correlationId=${correlationId}`;
+            const authFinalizeResponse = await NetworkModule.get(url2);
+            console.log('bureauapp-',authFinalizeResponse);
+            
+            const userInfo = await this._getUserInfo(correlationId);
+            console.log('bureauapp-',userInfo);
+            this.setState({ userIp, authInitiateResponse, authFinalizeResponse, correlationId, userInfo });
+            
+            if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber)){
+                this.props.showLoginSuccessfulScreen();
+                this.setState({ isLoading: false });
+                return;
+            }
+            this._initiateGenerateOtpFlow();
+        } catch(error) {
+            console.log(error);
         }
-        this._initiateGenerateOtpFlow();
     }
 
     render() {

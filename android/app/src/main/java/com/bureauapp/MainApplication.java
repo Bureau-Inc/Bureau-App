@@ -28,9 +28,10 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNGetRandomValuesPackage(),
-            new SvgPackage(),
+              (ReactPackage) new SvgPackage(),
             new RNGestureHandlerPackage(),
-            new ClipboardPackage()
+            new ClipboardPackage(),
+              new NetworkModulePackage()
       );
     }
 
