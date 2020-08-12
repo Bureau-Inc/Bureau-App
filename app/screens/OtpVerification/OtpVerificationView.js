@@ -22,7 +22,7 @@ class OtpVerificationView extends Component {
         this.setListenerForOtp();
         const generateOtpResponse = await this.props.generateOtp(this.props.navigation.getParam('phoneNumber'), this.props.navigation.getParam('country'));
         if((!generateOtpResponse) ||  generateOtpResponse.errorCode)
-            Alert.alert('Error', (generateOtpResponse && (generateOtpResponse.errorDescription || generateOtpResponse.response)) || 'Something Went Wrong');
+            Alert.alert('Error', (generateOtpResponse && (generateOtpResponse.errorDescription || generateOtpResponse.response)) || 'Something went wrong');
         else
             this.setState({ mVerificationId: generateOtpResponse.mVerificationId });
     }
@@ -33,7 +33,7 @@ class OtpVerificationView extends Component {
     setListenerForOtp = () =>
         RNOtpVerify.getOtp()
             .then(p => RNOtpVerify.addListener(this.otpHandler))
-            .catch(p => console.log(p));
+            .catch(p => { /*todo*/ });
 
     otpHandler = (message) => {
         try{
@@ -43,7 +43,7 @@ class OtpVerificationView extends Component {
             this._handleOtpVerification();
         }
         catch(err){
-            console.log('got Unexpected message', err);
+            //handleError
         }
     };
     _handleOtpVerification = async () => {
