@@ -8,7 +8,6 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -24,11 +23,9 @@ public class NetworkReceiver extends BroadcastReceiver {
         for (final Network network : networks) {
             final NetworkInfo netInfo = connectivityManager.getNetworkInfo(network);
             if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                //Toast.makeText(this, "Connected to mobile NR", Toast.LENGTH_SHORT).show();
                 OkHttpClientProvider.setOkHttpClientFactory(new NetworkClientFactory(network));
                 break;
             } else if (netInfo.getType() == ConnectivityManager.TYPE_WIFI && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                //Toast.makeText(this, "cONNECTED TO WIFI nr", Toast.LENGTH_SHORT).show();
                 OkHttpClientProvider.setOkHttpClientFactory(new NetworkClientFactory(network));
             }
         }

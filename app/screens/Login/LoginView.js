@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput, Image, Text, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import publicIP from 'react-native-public-ip';
 import 'react-native-get-random-values';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { v4 as uuid } from 'uuid';
@@ -11,7 +10,6 @@ import { BlueContainer } from '../../config/svgs';
 import { getPhoneNumberWithCountryCode, getCountrylabels } from '../../utils';
 import styles from './styles';
 import images from '../../config/images';
-import axios from 'axios';
 import NetworkModule from '../../utils/network-module/network-module';
 
 
@@ -23,20 +21,8 @@ class LoginView extends Component {
             isLoading: false,
             countryCodeLabels: getCountrylabels(),
             selectedCountryCode: getCountrylabels()[0],
-            userIp: '',
-            authInitiateResponse: ',',
-            authFinalizeResponse: '',
-            userInfo: '',
-            correlationId: '',
-            error: ''
+            correlationId: ''
         };
-    }
-    _initiateGenerateOtpFlow = async() => {
-        const response = await this.props.generateOtp(this.state.phoneNumber, this.state.selectedCountryCode.label);
-        (!response) ||  response.errorCode
-            ? Alert.alert('Error', (response && (response.errorDescription || response.response)) || 'Something Went Wrong')
-            : this.props.showOtpScreen({ mVerificationId: response.mVerificationId });
-        this.setState({ isLoading: false });
     }
 
     callGetUserInfo = async (correlationId, pollingTime) => new Promise((res,reject) => {
@@ -74,34 +60,31 @@ class LoginView extends Component {
         this.setState({ isLoading: true });
         const correlationId = uuid();
         try {
-            const userIp = await NetworkModule.get('https://api.ipify.org');
+            // authINitiate Call
             const url1 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=91${this.state.phoneNumber}&correlationId=${correlationId}`;
             const authInitiateResponse = await NetworkModule.get(url1);
-            console.log('bureauapp-',authInitiateResponse);
 
-            // const authFinalizeResponse = await this.props.authFinalize(correlationId);
+            //authFinalizecall
             const url2 = `https://api.bureau.id/v2/auth/finalize?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&correlationId=${correlationId}`;
-            const authFinalizeResponse = await NetworkModule.get(url2);
-            console.log('bureauapp-',authFinalizeResponse);
+            NetworkModule.get(url2);
             
             const userInfo = await this._getUserInfo(correlationId);
-            console.log('bureauapp-',userInfo);
-            this.setState({ userIp, authInitiateResponse, authFinalizeResponse, correlationId, userInfo });
+            this.setState({ correlationId });
             
             if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber)){
                 this.props.showLoginSuccessfulScreen();
                 this.setState({ isLoading: false });
                 return;
             }
-            this._initiateGenerateOtpFlow();
+            this.setState({ isLoading: false });
+            this.props.showOtpScreen({ phoneNumber: this.state.phoneNumber, country: this.state.selectedCountryCode.label });
         } catch(error) {
-            this.setState({ isLoading: false, error });
-            console.log('bureauapp-',error);
-            if(error.message === 'WIFI_CONNECTED'){
-                this._initiateGenerateOtpFlow();
-            }
-            Alert.alert('Mobile data not available. Please connect and try again');
+            this.setState({ isLoading: false });
+            error.message === 'timeout'
+                ?   Alert.alert('Not able to use Mobile Data')
+                :   Alert.alert(error.message);
         }
+        
     }
 
     render() {
@@ -161,14 +144,6 @@ class LoginView extends Component {
                                     </View>
                                 </View>
                             </View>
-
-                            {/* <View><Text>userIp: {this.state.userIp}</Text></View>
-                            <View><Text>authInitiateResponse{JSON.stringify(this.state.authInitiateResponse)}</Text></View>
-                            <View><Text>authFinalizeResponse{JSON.stringify(this.state.authFinalizeResponse)}</Text></View>
-                            <View><Text>userINfo: {JSON.stringify(this.state.userInfo)}</Text></View>
-                            <View><Text>error: {JSON.stringify(this.state.error)}</Text></View>
-                            <View><TextInput editable={true}
-                                value={`${this.state.correlationId}`} /></View> */}
                         </View>
                     </View>
                     <View style={styles.buttonContainer}>
@@ -191,8 +166,7 @@ LoginView.propTypes = {
     authFinalize: PropTypes.func,
     getUserInfo: PropTypes.func,
     showLoginSuccessfulScreen: PropTypes.func,
-    showOtpScreen: PropTypes.func,
-    generateOtp: PropTypes.func
+    showOtpScreen: PropTypes.func
 };
 
 export default LoginView;

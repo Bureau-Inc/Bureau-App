@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.CookiePolicy;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -62,8 +63,6 @@ public class NetworkModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 try {
-                    //Your code goes here
-                  //  Toast.makeText(getReactApplicationContext(), "Init Request", Toast.LENGTH_SHORT).show();
                     NetworkModule.this.connectToAvailableNetwork(url, promise);
                 } catch (Exception e) {
                     throw(e);
@@ -73,30 +72,16 @@ public class NetworkModule extends ReactContextBaseJavaModule {
         thread.start();
     }
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void connectToAvailableNetwork(String url, Promise promise) {
         ConnectivityManager connectivityManager =  (ConnectivityManager)
                 reactContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        
-
-        // Network[] networks = connectivityManager.getAllNetworks();
-
-        //     for (final Network network : networks) {
-        //     final NetworkInfo netInfo = connectivityManager.getNetworkInfo(network);
-        //     if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-        //         IS_MOBILE_CONNECTED = true;
-        //         // break;
-        //     } else if (netInfo.getType() == ConnectivityManager.TYPE_WIFI && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-        //         IS_WIFI_CONNECTED = true;
-        //     }
-        // }
                 NetworkRequest netwokRequest = new NetworkRequest.Builder()
                         .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                         .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                         .build();
-
-
-
         Request request = new Request.Builder()
                 .url("https://api.ipify.org/")
                 .build();
@@ -104,11 +89,7 @@ public class NetworkModule extends ReactContextBaseJavaModule {
             @Override
             public void onUnavailable(){
                 super.onUnavailable();
-                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-                if(activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
-                    promise.reject(new Exception("WIFI_CONNECTED"));
-                }
-                promise.reject(new Exception("MObile data not available"));
+                    promise.reject(new Exception("Mobile data not available"));
             }
 
             @Override
@@ -120,7 +101,7 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                     e.printStackTrace();
                 }
             }
-        }, 10000);
+        }, 3000);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -136,10 +117,13 @@ public class NetworkModule extends ReactContextBaseJavaModule {
         builder.followRedirects(true);
         builder.followSslRedirects(true);
         builder.socketFactory(network.getSocketFactory());
-        OkHttpClient client = builder.build();
+        OkHttpClient client = builder
+                .callTimeout(15,TimeUnit.SECONDS)
+                .build();
 
         Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 promise.reject(e);
@@ -150,33 +134,11 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                 if(response.isSuccessful())
                 if (response.body() != null) {
                     String responseBody = response.body().string();
-                    Log.d("hiburo",responseBody);
                     promise.resolve(responseBody);
                 } else {
                     promise.reject(new Exception());
                 }
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        String responseBody;
-//        try (Response response = call.execute()) {
-//
-//        } catch(Exception error) {
-//            promise.reject(error);
-//        }
     }
 }

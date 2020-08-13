@@ -10,7 +10,6 @@ import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -77,19 +76,16 @@ public class MainActivity extends ReactActivity {
         connectivityManager.requestNetwork(request, new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(final Network network) {
-                Toast.makeText(MainActivity.this, "Mobile data available", Toast.LENGTH_SHORT).show();
                 OkHttpClientProvider.setOkHttpClientFactory(new NetworkClientFactory(network));
             }
             @Override
             public void onLost(Network network) {
                 super.onLost(network);
-               Toast.makeText(MainActivity.this, "Mobile data lost", Toast.LENGTH_SHORT).show();
                 connectToAvailableNetwork();
             }
             @Override
             public void onUnavailable() {
                 super.onUnavailable();
-                Toast.makeText(MainActivity.this, "Mobile data not available", Toast.LENGTH_SHORT).show();
                 connectToAvailableNetwork();
             }
         });
@@ -103,11 +99,9 @@ public class MainActivity extends ReactActivity {
         for (final Network network : networks) {
             final NetworkInfo netInfo = connectivityManager.getNetworkInfo(network);
             if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                Toast.makeText(MainActivity.this, "Connected to Mobile", Toast.LENGTH_SHORT).show();
                 OkHttpClientProvider.setOkHttpClientFactory(new NetworkClientFactory(network));
                 break;
             } else if (netInfo.getType() == ConnectivityManager.TYPE_WIFI && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                Toast.makeText(MainActivity.this, "Connected to Wifi", Toast.LENGTH_SHORT).show();
                 OkHttpClientProvider.setOkHttpClientFactory(new NetworkClientFactory(network));
             }
         }
