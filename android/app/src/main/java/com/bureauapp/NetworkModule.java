@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.annotation.WorkerThread;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,6 +34,8 @@ public class NetworkModule extends ReactContextBaseJavaModule {
 
     private static final String DURATION_SHORT_KEY = "SHORT";
     private static final String DURATION_LONG_KEY = "LONG";
+    private static boolean IS_MOBILE_CONNECTED = false;
+    private static boolean IS_WIFI_CONNECTED = false;
 
     NetworkModule(ReactApplicationContext context) {
         super(context);
@@ -54,37 +58,69 @@ public class NetworkModule extends ReactContextBaseJavaModule {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @ReactMethod
     public void get(String url, Promise promise) {
-        Toast.makeText(getReactApplicationContext(), "Init Request", Toast.LENGTH_SHORT).show();
-        this.connectToAvailableNetwork(url, promise);
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    //Your code goes here
+                  //  Toast.makeText(getReactApplicationContext(), "Init Request", Toast.LENGTH_SHORT).show();
+                    NetworkModule.this.connectToAvailableNetwork(url, promise);
+                } catch (Exception e) {
+                    throw(e);
+                }
+            }
+        });
+        thread.start();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void connectToAvailableNetwork(String url, Promise promise) {
         ConnectivityManager connectivityManager =  (ConnectivityManager)
                 reactContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        Network[] networks = connectivityManager.getAllNetworks();
-        Network mobileNetwork = null;
-        Network wifiNetwork = null;
-        for (final Network network : networks) {
-            final NetworkInfo netInfo = connectivityManager.getNetworkInfo(network);
-            if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                mobileNetwork = network;
-                break;
-            } else if (netInfo.getType() == ConnectivityManager.TYPE_WIFI && netInfo.getState() == NetworkInfo.State.CONNECTED) {
-                wifiNetwork = network;
+        
+
+        // Network[] networks = connectivityManager.getAllNetworks();
+
+        //     for (final Network network : networks) {
+        //     final NetworkInfo netInfo = connectivityManager.getNetworkInfo(network);
+        //     if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+        //         IS_MOBILE_CONNECTED = true;
+        //         // break;
+        //     } else if (netInfo.getType() == ConnectivityManager.TYPE_WIFI && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+        //         IS_WIFI_CONNECTED = true;
+        //     }
+        // }
+                NetworkRequest netwokRequest = new NetworkRequest.Builder()
+                        .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                        .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                        .build();
+
+
+
+        Request request = new Request.Builder()
+                .url("https://api.ipify.org/")
+                .build();
+        connectivityManager.requestNetwork(netwokRequest, new ConnectivityManager.NetworkCallback(){
+            @Override
+            public void onUnavailable(){
+                super.onUnavailable();
+                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+                if(activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
+                    promise.reject(new Exception("WIFI_CONNECTED"));
+                }
+                promise.reject(new Exception("MObile data not available"));
             }
-        }
-        try {
-            if (mobileNetwork != null) {
-                this.initializeRequest(mobileNetwork, url, promise);
-            } else if (wifiNetwork != null) {
-                this.initializeRequest(wifiNetwork, url, promise);
-            } else {
-                promise.reject(new Exception());
+
+            @Override
+            public void onAvailable(Network network) {
+                super.onAvailable(network);
+                try {
+                    initializeRequest(network, url, promise);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch(Exception exception) {
-            promise.reject(exception);
-        }
+        }, 10000);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -103,17 +139,44 @@ public class NetworkModule extends ReactContextBaseJavaModule {
         OkHttpClient client = builder.build();
 
         Request request = new Request.Builder().url(url).build();
-        Call call = client.newCall(request);
-        String responseBody;
-        try (Response response = call.execute()) {
-            if (response.body() != null) {
-                responseBody = response.body().string();
-                promise.resolve(responseBody);
-            } else {
-                promise.reject(new Exception());
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                promise.reject(e);
             }
-        } catch(Exception error) {
-            promise.reject(error);
-        }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful())
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    Log.d("hiburo",responseBody);
+                    promise.resolve(responseBody);
+                } else {
+                    promise.reject(new Exception());
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        String responseBody;
+//        try (Response response = call.execute()) {
+//
+//        } catch(Exception error) {
+//            promise.reject(error);
+//        }
     }
 }
