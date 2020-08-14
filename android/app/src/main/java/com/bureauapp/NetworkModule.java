@@ -82,24 +82,44 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                         .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                         .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                         .build();
-                        
-        connectivityManager.requestNetwork(netwokRequest, new ConnectivityManager.NetworkCallback(){
-            @Override
-            public void onUnavailable(){
-                super.onUnavailable();
-                    promise.reject(new Exception("Mobile data not available"));
-            }
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                 connectivityManager.requestNetwork(netwokRequest, new ConnectivityManager.NetworkCallback(){
+                     @Override
+                     public void onUnavailable(){
+                         super.onUnavailable();
+                             promise.reject(new Exception("Mobile data not available"));
+                     }
 
-            @Override
-            public void onAvailable(Network network) {
-                super.onAvailable(network);
-                try {
-                    initializeRequest(network, url, promise);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 3000);
+                     @Override
+                     public void onAvailable(Network network) {
+                         super.onAvailable(network);
+                         try {
+                             initializeRequest(network, url, promise);
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                     }
+                 }, 3000);
+             }
+             else{
+                 connectivityManager.requestNetwork(netwokRequest, new ConnectivityManager.NetworkCallback(){
+                     @Override
+                     public void onUnavailable(){
+                         super.onUnavailable();
+                         promise.reject(new Exception("Mobile data not available"));
+                     }
+
+                     @Override
+                     public void onAvailable(Network network) {
+                         super.onAvailable(network);
+                         try {
+                             initializeRequest(network, url, promise);
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                     }
+                 });
+             }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -131,12 +151,15 @@ public class NetworkModule extends ReactContextBaseJavaModule {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful())
-                if (response.body() != null) {
-                    String responseBody = response.body().string();
-                    promise.resolve(responseBody);
-                } else {
-                    promise.reject(new Exception());
+                if(response.isSuccessful()) {
+                    if (response.body() != null) {
+                        promise.resolve(response.body().string());
+                    } else {
+                        promise.reject(new Exception("Response null"));
+                    }
+                }
+                 else{
+                    promise.reject(new Exception("Response failed"));
                 }
             }
         });

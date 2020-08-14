@@ -79,7 +79,7 @@ class LoginView extends Component {
             this.setState({ authInitiateResponse });
 
             //authFinalizecall
-            const authfinalizeresponse = this._handleAuthFlow(correlationId);
+            this._handleAuthFlow(correlationId);
             
             const userInfo = await this._getUserInfo(correlationId);
             this.setState({ userInfo });

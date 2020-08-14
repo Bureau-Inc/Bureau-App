@@ -27,16 +27,16 @@ public class MainActivity extends ReactActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy); 
         mNetworkReceiver = new NetworkReceiver();
-        registerNetworkReceiver();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            attachToCellular(this);
-        }
+//        registerNetworkReceiver();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            attachToCellular(this);
+//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterNetworkChanges();
+//        unregisterNetworkChanges();
     }
 
     /**
