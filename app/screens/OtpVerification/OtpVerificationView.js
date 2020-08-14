@@ -22,7 +22,7 @@ class OtpVerificationView extends Component {
         this.setListenerForOtp();
         const generateOtpResponse = await this.props.generateOtp(this.props.navigation.getParam('phoneNumber'), this.props.navigation.getParam('country'));
         if((!generateOtpResponse) ||  generateOtpResponse.errorCode)
-            Alert.alert('Error', (generateOtpResponse && (generateOtpResponse.errorDescription || generateOtpResponse.response)) || 'Something went wrong');
+            Alert.alert('Error', (generateOtpResponse && (generateOtpResponse.errorDescription || generateOtpResponse.response)) || 'Not able to use mobile data');
         else
             this.setState({ mVerificationId: generateOtpResponse.mVerificationId });
     }

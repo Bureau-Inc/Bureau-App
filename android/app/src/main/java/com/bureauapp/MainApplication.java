@@ -31,10 +31,11 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNOtpVerifyPackage(),
             new RNGetRandomValuesPackage(),
-            new SvgPackage(),
+              (ReactPackage) new SvgPackage(),
             new RNGestureHandlerPackage(),
             new ClipboardPackage(),
-            new RNCWebViewPackage()
+            new RNCWebViewPackage(),
+              new NetworkModulePackage()
       );
     }
 
