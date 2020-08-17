@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
-import { BlueContainer } from '../../config/svgs';
-import styles from './styles';
-import images from '../../config/images';
+import { WebView } from 'react-native-webview';
 
 class LoginView extends Component {
     constructor(props) {
@@ -12,32 +9,9 @@ class LoginView extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <BlueContainer style={styles.curveContainer} />
-                <View style={styles.absoluteContainer}>
-                    <View style={styles.topContainer}>
-                        <View style={styles.logoContainer}>
-                            <Image
-                                source={images.icons.logo_blue}
-                                resizeMode={'contain'}
-                                style={styles.logo}
-                            />
-                        </View>
-                        <View>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.heading}>
-                                    Welcome!
-                                </Text>
-                            </View>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.text}>
-                                Login successful
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            </View>
+            <WebView
+                source={{ uri: 'https://www.gojek.io/'}}
+            />
         );
     }
 }

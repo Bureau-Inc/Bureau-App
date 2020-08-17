@@ -3,6 +3,7 @@ package com.bureauapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.faizal.OtpVerify.RNOtpVerifyPackage;
 import org.linusu.RNGetRandomValuesPackage;
 import com.horcrux.svg.SvgPackage;
@@ -30,9 +31,11 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNOtpVerifyPackage(),
             new RNGetRandomValuesPackage(),
-            new SvgPackage(),
+              (ReactPackage) new SvgPackage(),
             new RNGestureHandlerPackage(),
-            new ClipboardPackage()
+            new ClipboardPackage(),
+            new RNCWebViewPackage(),
+              new NetworkModulePackage()
       );
     }
 

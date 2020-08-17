@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput, Image, Text, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import publicIP from 'react-native-public-ip';
 import 'react-native-get-random-values';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { v4 as uuid } from 'uuid';
@@ -11,6 +10,7 @@ import { BlueContainer } from '../../config/svgs';
 import { getPhoneNumberWithCountryCode, getCountrylabels } from '../../utils';
 import styles from './styles';
 import images from '../../config/images';
+import NetworkModule from '../../utils/network-module/network-module';
 
 
 class LoginView extends Component {
@@ -20,8 +20,10 @@ class LoginView extends Component {
             phoneNumber: '',
             isLoading: false,
             countryCodeLabels: getCountrylabels(),
-            selectedCountryCode: getCountrylabels()[0]
-
+            selectedCountryCode: getCountrylabels()[0],
+            correlationId: '',
+            authInitiateResponse: '',
+            userInfo: ''
         };
     }
 
@@ -56,19 +58,45 @@ class LoginView extends Component {
         return userInfo;
     }
 
+    _handleAuthFlow = async (correlationId) => {
+        try {
+            const url2 = `https://api.bureau.id/v2/auth/finalize?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&correlationId=${correlationId}`;
+            return await NetworkModule.get(url2);
+        }
+        catch(err){
+            return null;
+        }
+    }
+
     _handleLoginClick = async () => {
         this.setState({ isLoading: true });
         const correlationId = uuid();
-        const userIp = await publicIP();
-        const authInitiateResponse = await this.props.authInitiate(userIp, getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber), correlationId, this.state.selectedCountryCode.label);
-        const authFinalizeResponse = await this.props.authFinalize(correlationId);
-        const userInfo = await this._getUserInfo(correlationId);
-        if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber)){
-            this.props.showLoginSuccessfulScreen();
+        this.setState({ correlationId });
+        try {
+            // authINitiate Call
+            const url1 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=91${this.state.phoneNumber}&correlationId=${correlationId}`;
+            const authInitiateResponse = await NetworkModule.get(url1);
+            this.setState({ authInitiateResponse });
+
+            //authFinalizecall
+            this._handleAuthFlow(correlationId);
+            
+            const userInfo = await this._getUserInfo(correlationId);
+            this.setState({ userInfo });
+            
+            if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber)){
+                this.props.showLoginSuccessfulScreen();
+                this.setState({ isLoading: false });
+                return;
+            }
             this.setState({ isLoading: false });
-            return;
+            this.props.showOtpScreen({ phoneNumber: this.state.phoneNumber, country: this.state.selectedCountryCode.label });
+        } catch(error) {
+            this.setState({ isLoading: false });
+            error.message === 'timeout'
+                ?   Alert.alert('Error', 'Not able to use mobile data')
+                :   Alert.alert('Error', error.message);
         }
-        this.props.showOtpScreen({ phoneNumber: this.state.phoneNumber, country: this.state.selectedCountryCode.label });
     }
 
     render() {
