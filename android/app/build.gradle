@@ -31,17 +31,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-     signingConfigs {
-        release {
-            if (project.hasProperty('BUREAU_RELEASE_STORE_FILE')) {
-                storeFile file(BUREAU_RELEASE_STORE_FILE)
-                storePassword BUREAU_RELEASE_STORE_PASSWORD
-                keyAlias BUREAU_RELEASE_KEY_ALIAS
-                keyPassword BUREAU_RELEASE_KEY_PASSWORD
-            }
-        }
-    }
-
     defaultConfig {
         applicationId "com.bureauapp"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -61,7 +50,6 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
