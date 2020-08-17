@@ -73,9 +73,10 @@ class LoginView extends Component {
             this.props.showOtpScreen({ phoneNumber: this.state.phoneNumber, country: this.state.selectedCountryCode.label });
         } catch(error) {
             this.setState({ isLoading: false });
-            error.message === 'timeout'
-                ?   Alert.alert('Error', 'Not able to use mobile data')
-                :   Alert.alert('Error', error.message);
+            if(error.message === 'wifi only')
+                this.props.showOtpScreen({ phoneNumber: this.state.phoneNumber, country: this.state.selectedCountryCode.label });
+            else 
+                Alert.alert('Error', error.message);
         }
     }
 

@@ -46,7 +46,7 @@ export async function invokeApiUsingNetworkModule(payload) {
         }
     } catch (err) {
         actionTypes.failure && dispatchAction(actionTypes.failure);
-        if (err.message === 'Mobile data not available')
+        if (err.message === 'mobile data not available' || err.message === 'wifi only')
             throw(err);
     }
 
