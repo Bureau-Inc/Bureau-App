@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { View, TextInput, Image, Text, Alert } from 'react-native';
+import 'react-native-get-random-values';
+import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 import 'react-native-get-random-values';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { v4 as uuid } from 'uuid';
 
 import { Button } from '../../components';
 import { BlueContainer } from '../../config/svgs';
 import { getPhoneNumberWithCountryCode, getCountrylabels } from '../../utils';
 import styles from './styles';
 import images from '../../config/images';
-import NetworkModule from '../../utils/network-module/network-module';
 
 
 class LoginView extends Component {
@@ -20,10 +20,7 @@ class LoginView extends Component {
             phoneNumber: '',
             isLoading: false,
             countryCodeLabels: getCountrylabels(),
-            selectedCountryCode: getCountrylabels()[0],
-            correlationId: '',
-            authInitiateResponse: '',
-            userInfo: ''
+            selectedCountryCode: getCountrylabels()[0]
         };
     }
 
@@ -58,33 +55,16 @@ class LoginView extends Component {
         return userInfo;
     }
 
-    _handleAuthFlow = async (correlationId) => {
-        try {
-            const url2 = `https://api.bureau.id/v2/auth/finalize?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&correlationId=${correlationId}`;
-            return await NetworkModule.get(url2);
-        }
-        catch(err){
-            return null;
-        }
-    }
-
     _handleLoginClick = async () => {
         this.setState({ isLoading: true });
         const correlationId = uuid();
-        this.setState({ correlationId });
+        const msisdn = getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber);
         try {
-            // authINitiate Call
-            const url1 = `https://api.bureau.id/v2/auth/initiate?clientId=d124b98e-c8b8-4d5c-8210-7b59ebc2f7fd&callbackUrl=https://s790uxck71.execute-api.ap-south-1.amazonaws.com/prd/callback&countryCode=IN&msisdn=91${this.state.phoneNumber}&correlationId=${correlationId}`;
-            const authInitiateResponse = await NetworkModule.get(url1);
-            this.setState({ authInitiateResponse });
+            await this.props.authInitiate(msisdn, correlationId, this.state.selectedCountryCode.label);
+            await this.props.authFinalize(correlationId);
 
-            //authFinalizecall
-            this._handleAuthFlow(correlationId);
-            
             const userInfo = await this._getUserInfo(correlationId);
-            this.setState({ userInfo });
-            
-            if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber)){
+            if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === msisdn){
                 this.props.showLoginSuccessfulScreen();
                 this.setState({ isLoading: false });
                 return;
@@ -173,7 +153,6 @@ class LoginView extends Component {
 }
 
 LoginView.propTypes = {
-    authDiscover: PropTypes.func,
     authInitiate: PropTypes.func,
     authFinalize: PropTypes.func,
     getUserInfo: PropTypes.func,

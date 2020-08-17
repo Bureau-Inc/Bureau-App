@@ -8,3 +8,18 @@ export const getCountrylabels = () => {
         labels.push({ label: country, value: countryCodes[country] }));           
     return labels;
 };
+
+export const getCompleteUrl = (ApiArgs) => {
+    const {
+        url,
+        baseURL,
+        params
+    } = ApiArgs;
+    let fullURL = `${baseURL}${url}`;
+    Object.keys(params).map( (param, index) => {
+        fullURL = (index === 0)
+            ?  `${fullURL}?${param}=${params[param]}`
+            :   `${fullURL}&${param}=${params[param]}`;
+    });
+    return fullURL;
+};

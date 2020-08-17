@@ -1,5 +1,5 @@
-import invokeApi from './request';
+import { invokeApiUsingAxios, invokeApiUsingNetworkModule } from './request';
 import constants from './constants';
 import { countryCodes } from './countryCode';
 
-export { invokeApi, constants, countryCodes };
+export { invokeApiUsingAxios, invokeApiUsingNetworkModule, constants, countryCodes };
