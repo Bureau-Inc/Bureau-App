@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { store } from '../store/configureStore';
 import { getCompleteUrl } from '../utils';
-import NetworkModule from '../utils/network-module/network-module';
+import NetworkModule from '../utils/network-module';
 
 // General api_call to access data
 export async function invokeApiUsingAxios(payload, rethrowError = false) {
