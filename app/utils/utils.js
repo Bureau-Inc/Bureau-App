@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { countryCodes } from '../api';
 
 export const getPhoneNumberWithCountryCode = (countryCode, phoneNumber) => `${countryCode}${phoneNumber}`;
@@ -23,3 +24,5 @@ export const getCompleteUrl = (ApiArgs) => {
     });
     return fullURL;
 };
+
+export const isIOS = () => Platform.OS === 'ios';

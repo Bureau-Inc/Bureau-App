@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { store } from '../store/configureStore';
-import { getCompleteUrl } from '../utils';
+import { getCompleteUrl, isIOS } from '../utils';
 import NetworkModule from '../utils/network-module';
 
 // General api_call to access data
@@ -52,11 +52,10 @@ async function invokeApiUsingNetworkModule(payload) {
 
 }
 
-export async function fetch(payload, os){
-    if(os=== 'ios')
-        invokeApiUsingAxios(payload);
-    else
-        invokeApiUsingNetworkModule(payload);
+export async function fetch(payload){
+    return isIOS
+    ? invokeApiUsingAxios(payload)
+    : invokeApiUsingNetworkModule(payload);
 }
 
 const getHeaders = (token) => {

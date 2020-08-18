@@ -99,7 +99,7 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                          try {
                              initializeRequest(network, url, promise);
                          } catch (IOException e) {
-                             e.printStackTrace();
+                             // TODO Record error using sentry / firebase
                          }
                      }
                  }, 3000);
@@ -118,7 +118,7 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                          try {
                              initializeRequest(network, url, promise);
                          } catch (IOException e) {
-                             e.printStackTrace();
+                             // TODO Record error using sentry / firebase
                          }
                      }
                  });

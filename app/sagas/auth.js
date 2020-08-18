@@ -9,7 +9,7 @@ import {
 } from '../actions/types';
 import { AUTH_ENDPOINT_URL, AUTH_CLIENT_ID, CALLBACK_URL } from '@env';
 
-export async function authInitiate(msisdn, correlationId, countryCode, os){
+export async function authInitiate(msisdn, correlationId, countryCode){
     const apiArgs = {
         options: {
             method: 'get',
@@ -29,7 +29,7 @@ export async function authInitiate(msisdn, correlationId, countryCode, os){
             failure: INITIATE_FAILURE
         }
     };
-    const response = await fetch(apiArgs, os);
+    const response = await fetch(apiArgs);
     return response;
 }
 
@@ -50,6 +50,6 @@ export async function authFinalize(correlationId, os){
             failure: FINALIZE_FAILURE
         }
     };
-    const response = await fetch(apiArgs, os);
+    const response = await fetch(apiArgs);
     return response;
 }
