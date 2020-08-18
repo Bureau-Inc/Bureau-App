@@ -1,5 +1,5 @@
-import { invokeApiUsingAxios, invokeApiUsingNetworkModule } from './request';
+import { invokeApiUsingAxios, fetch } from './request';
 import constants from './constants';
 import { countryCodes } from './countryCode';
 
-export { invokeApiUsingAxios, invokeApiUsingNetworkModule, constants, countryCodes };
+export { invokeApiUsingAxios, fetch, constants, countryCodes };

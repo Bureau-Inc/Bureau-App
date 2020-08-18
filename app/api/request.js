@@ -31,7 +31,7 @@ export async function invokeApiUsingAxios(payload, rethrowError = false) {
     return null;
 }
 
-export async function invokeApiUsingNetworkModule(payload) {
+async function invokeApiUsingNetworkModule(payload) {
     const {
         options,
         actionTypes
@@ -50,6 +50,13 @@ export async function invokeApiUsingNetworkModule(payload) {
             throw(err);
     }
 
+}
+
+export async function fetch(payload, os){
+    if(os=== 'ios')
+        invokeApiUsingAxios(payload);
+    else
+        invokeApiUsingNetworkModule(payload);
 }
 
 const getHeaders = (token) => {

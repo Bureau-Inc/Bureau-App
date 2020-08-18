@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Image, Text, Alert } from 'react-native';
+import { View, TextInput, Image, Text, Alert, Platform } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
@@ -60,8 +60,8 @@ class LoginView extends Component {
         const correlationId = uuid();
         const msisdn = getPhoneNumberWithCountryCode(this.state.selectedCountryCode.value, this.state.phoneNumber);
         try {
-            await this.props.authInitiate(msisdn, correlationId, this.state.selectedCountryCode.label);
-            await this.props.authFinalize(correlationId);
+            await this.props.authInitiate(msisdn, correlationId, this.state.selectedCountryCode.label, Platform.OS);
+            await this.props.authFinalize(correlationId, Platform.OS);
 
             const userInfo = await this._getUserInfo(correlationId);
             if(userInfo && userInfo.mobileNumber && userInfo.mobileNumber === msisdn){

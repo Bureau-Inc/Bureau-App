@@ -1,4 +1,4 @@
-import { invokeApiUsingNetworkModule, constants } from '../api';
+import { fetch, constants } from '../api';
 import {
     INITIATE_REQUEST,
     INITIATE_SUCCESS,
@@ -9,7 +9,7 @@ import {
 } from '../actions/types';
 import { AUTH_ENDPOINT_URL, AUTH_CLIENT_ID, CALLBACK_URL } from '@env';
 
-export async function authInitiate(msisdn, correlationId, countryCode){
+export async function authInitiate(msisdn, correlationId, countryCode, os){
     const apiArgs = {
         options: {
             method: 'get',
@@ -29,11 +29,11 @@ export async function authInitiate(msisdn, correlationId, countryCode){
             failure: INITIATE_FAILURE
         }
     };
-    const response = await invokeApiUsingNetworkModule(apiArgs);
+    const response = await fetch(apiArgs, os);
     return response;
 }
 
-export async function authFinalize(correlationId){
+export async function authFinalize(correlationId, os){
     const apiArgs = {
         options: {
             method: 'get',
@@ -50,6 +50,6 @@ export async function authFinalize(correlationId){
             failure: FINALIZE_FAILURE
         }
     };
-    const response = await invokeApiUsingNetworkModule(apiArgs);
+    const response = await fetch(apiArgs, os);
     return response;
 }
