@@ -2,6 +2,7 @@ package com.bureauapp;
 
 import android.app.Application;
 
+import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.faizal.OtpVerify.RNOtpVerifyPackage;
@@ -11,10 +12,8 @@ import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -27,16 +26,19 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new RNOtpVerifyPackage(),
-            new RNGetRandomValuesPackage(),
-              (ReactPackage) new SvgPackage(),
-            new RNGestureHandlerPackage(),
-            new ClipboardPackage(),
-            new RNCWebViewPackage(),
-              new NetworkModulePackage()
-      );
+
+       @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      // Packages that cannot be autolinked yet can be added manually here, for example:
+      //packages.add(new RNGetRandomValuesPackage());
+      // packages.add((ReactPackage) new SvgPackage());
+      // packages.add(new RNGestureHandlerPackage());
+      // packages.add(new ClipboardPackage());
+      // packages.add(new RNCWebViewPackage());
+      // packages.add(new NetworkModulePackage());
+      // packages.add(new RNOtpVerifyPackage());
+
+      return packages;
     }
 
     @Override
