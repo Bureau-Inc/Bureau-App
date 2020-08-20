@@ -24,7 +24,8 @@ export async function invokeApiUsingAxios(payload, rethrowError = false) {
         }
     } catch (err) {
         actionTypes.failure && dispatchAction(actionTypes.failure);
-        if(rethrowError){
+        if(rethrowError || ( err && err.message && err.message.toLowerCase().icludes("network error")))
+        {
             throw(err);
         }
     }
