@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import PropTypes from "prop-types";
 import "react-native-get-random-values";
 import DropDownPicker from "react-native-dropdown-picker";
+import retry from 'async-retry';
 
 import { Button } from "../../components";
 import { BlueContainer } from "../../config/svgs";
@@ -23,41 +24,28 @@ class LoginView extends Component {
     };
   }
 
-  callGetUserInfo = async (correlationId, pollingTime) =>
-    new Promise((res, reject) => {
-      setTimeout(async () => {
-        try {
-          const userInfo = await this.props.getUserInfo(correlationId);
-          res(userInfo);
-        } catch (err) {
-          reject(err);
-        }
-      }, pollingTime);
-    });
-
   _getUserInfo = async correlationId => {
     let userInfo;
-    let pollingTime = 0;
-    let currentDate = new Date();
-    let retry = false;
-    do {
-      retry = false;
-      try {
-        userInfo = await this.callGetUserInfo(correlationId, pollingTime);
-      } catch (err) {
-        retry = true;
+    let shouldRetry = false;
+    let startTime = new Date();
+    const userInfoFinal = await retry(async (bail) => {
+      shouldRetry = false;
+      try{
+        userInfo = await this.props.getUserInfo(correlationId);
       }
-      if (pollingTime === 0) {
-        pollingTime = 100;
+      catch(err){
+        shouldRetry = true;
       }
-    } while (
-      ((userInfo && userInfo.status === "") || retry === true) &&
-      new Date().getTime() - currentDate.getTime() < 3000
-    );
-    if (retry === true) {
-      return null;
-    }
-    return userInfo;
+      if((shouldRetry || (userInfo && userInfo.status === "")) && new Date().getTime() - startTime.getTime() < 5000)
+        throw new Error('Retry initiated');
+      else
+        return userInfo || null;
+    }, {
+      retries: 50,
+      minTimeout: 100,
+      factor: 1
+    });
+    return userInfoFinal;
   };
 
   _handleLoginClick = async () => {

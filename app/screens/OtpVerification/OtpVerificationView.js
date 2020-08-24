@@ -33,7 +33,7 @@ class OtpVerificationView extends Component {
         (generateOtpResponse &&
           (generateOtpResponse.errorDescription ||
             generateOtpResponse.response)) ||
-          "Not able to use mobile data"
+          "Something went wrong while generating OTP"
       );
     } else {
       this.setmVerificationId(generateOtpResponse.mVerificationId);
