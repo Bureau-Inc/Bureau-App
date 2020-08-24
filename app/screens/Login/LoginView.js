@@ -10,6 +10,7 @@ import retry from 'async-retry';
 import { Button } from "../../components";
 import { BlueContainer } from "../../config/svgs";
 import { getPhoneNumberWithCountryCode, getCountrylabels } from "../../utils";
+import { constants } from "../../api";
 import styles from "./styles";
 import images from "../../config/images";
 
@@ -36,13 +37,13 @@ class LoginView extends Component {
       catch(err){
         shouldRetry = true;
       }
-      if((shouldRetry || (userInfo && userInfo.status === "")) && new Date().getTime() - startTime.getTime() < 5000)
+      if((shouldRetry || (userInfo && userInfo.status === "")) && new Date().getTime() - startTime.getTime() < constants.MAX_TIMEOUT)
         throw new Error('Retry initiated');
       else
         return userInfo || null;
     }, {
-      retries: 50,
-      minTimeout: 100,
+      retries: constants.MAX_RETRIES,
+      minTimeout: constants.RETRY_DELAY,
       factor: 1
     });
     return userInfoFinal;
