@@ -22,7 +22,7 @@ class OtpVerificationView extends Component {
 
   setmVerificationId = mVerificationId => this.setState({ mVerificationId });
   async componentDidMount() {
-    !isIOS && this.setListenerForOtp();
+    !isIOS() && this.setListenerForOtp();
     const generateOtpResponse = await this.props.generateOtp(
       this.props.navigation.getParam('phoneNumber'),
       this.props.navigation.getParam('country')
@@ -41,7 +41,7 @@ class OtpVerificationView extends Component {
   }
 
   componentWillUnmount() {
-    !isIOS && RNOtpVerify.removeListener();
+    !isIOS() && RNOtpVerify.removeListener();
   }
   setListenerForOtp = () =>
     RNOtpVerify.getOtp()
@@ -54,7 +54,7 @@ class OtpVerificationView extends Component {
     try {
       const otp = /(\d{6})/g.exec(message)[1];
       this.setState({ otp, isOtpFilled: true });
-      !isIOS && RNOtpVerify.removeListener();
+      RNOtpVerify.removeListener();
       this._handleOtpVerification();
     } catch (err) {
       //handleError

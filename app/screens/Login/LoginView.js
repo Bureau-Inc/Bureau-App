@@ -56,12 +56,12 @@ class LoginView extends Component {
       this.state.phoneNumber
     );
     try {
-      await this.props.authInitiate(
+      const authInitiateResponse = await this.props.authInitiate(
         msisdn,
         correlationId,
         this.state.selectedCountryCode.label
       );
-      await this.props.authFinalize(correlationId);
+      const authFinalizeResponse = await this.props.authFinalize(correlationId);
 
       const userInfo = await this._getUserInfo(correlationId);
       if (
@@ -80,14 +80,7 @@ class LoginView extends Component {
       });
     } catch (error) {
       this.setState({ isLoading: false });
-      if (error.message === "wifi only") {
-        this.props.showOtpScreen({
-          phoneNumber: this.state.phoneNumber,
-          country: this.state.selectedCountryCode.label
-        });
-      } else {
-        Alert.alert("Error", "Something went wrong!");
-      }
+      Alert.alert("Error", error.message || "Something went wrong!");
     }
   };
 

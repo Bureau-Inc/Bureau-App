@@ -78,19 +78,16 @@ public class NetworkModule extends ReactContextBaseJavaModule {
     public void connectToAvailableNetwork(String url, Promise promise) {
         ConnectivityManager connectivityManager =  (ConnectivityManager)
                 reactContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkRequest netwokRequest = new NetworkRequest.Builder()
+                NetworkRequest networkRequest = new NetworkRequest.Builder()
                         .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                         .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                         .build();
              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                 connectivityManager.requestNetwork(netwokRequest, new ConnectivityManager.NetworkCallback(){
+                 connectivityManager.requestNetwork(networkRequest, new ConnectivityManager.NetworkCallback(){
                      @Override
                      public void onUnavailable(){
                          super.onUnavailable();
-                         NetworkInfo currentActiveNetwork = connectivityManager.getActiveNetworkInfo();
-                         if(currentActiveNetwork == null)
-                            promise.reject(new Exception("mobile data not available"));
-                         promise.reject(new Exception("wifi only"));
+                         promise.reject(new Exception("Data not available"));
                      }
 
                      @Override
@@ -105,11 +102,11 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                  }, 3000);
              }
              else{
-                 connectivityManager.requestNetwork(netwokRequest, new ConnectivityManager.NetworkCallback(){
+                 connectivityManager.requestNetwork(networkRequest, new ConnectivityManager.NetworkCallback(){
                      @Override
                      public void onUnavailable(){
                          super.onUnavailable();
-                         promise.reject(new Exception("mobile data not available"));
+                         promise.reject(new Exception("Data not available"));
                      }
 
                      @Override

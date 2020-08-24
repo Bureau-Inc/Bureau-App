@@ -20,7 +20,7 @@ class Button extends Component{
                 onPress={onButtonPress}
                 style={[ styles.button, customStyle, (isLoading || isDisabled) && styles.disabledButton ]}
                 disabled={isLoading || isDisabled}
-                activeOpacity={0.1}
+                activeOpacity={0.7}
             >
                 {
                     isLoading

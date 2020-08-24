@@ -24,9 +24,9 @@ export async function invokeApiUsingAxios(payload, rethrowError = false) {
         }
     } catch (err) {
         actionTypes.failure && dispatchAction(actionTypes.failure);
-        if(rethrowError || ( err && err.message && err.message.toLowerCase().includes("network error")))
+        if(rethrowError || ( err && err.message && err.message.toLowerCase().includes('network error')))
         {
-            throw(err);
+            throw(new Error('Network Unavailable'));
         }
     }
     return null;
@@ -41,22 +41,24 @@ async function invokeApiUsingNetworkModule(payload) {
     try {
         actionTypes.request && dispatchAction(actionTypes.request);
         const apiResponse =  await NetworkModule.get(url);
-        if (apiResponse.status === 200) {
+        if (apiResponse && apiResponse.status === 200) {
             actionTypes.success && dispatchAction(actionTypes.success);
             return apiResponse.data;
         }
     } catch (err) {
         actionTypes.failure && dispatchAction(actionTypes.failure);
-        if (err.message === 'mobile data not available' || err.message === 'wifi only')
-            throw(err);
+        if (err.message === 'Data not available'){
+            await invokeApiUsingAxios(payload);
+        }
     }
 
 }
 
 export async function fetch(payload){
-    return isIOS
-    ? invokeApiUsingAxios(payload)
-    : invokeApiUsingNetworkModule(payload);
+    const response = isIOS
+        ? await invokeApiUsingAxios(payload)
+        : await invokeApiUsingNetworkModule(payload);
+    return response;
 }
 
 const getHeaders = (token) => {
