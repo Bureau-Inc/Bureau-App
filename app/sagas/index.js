@@ -1,5 +1,4 @@
 import {
-    authDiscover,
     authInitiate,
     authFinalize
 } from './auth';
@@ -12,7 +11,6 @@ import {
 } from './userInfo';
 
 export {
-    authDiscover,
     authInitiate,
     authFinalize,
     getUserInfo,

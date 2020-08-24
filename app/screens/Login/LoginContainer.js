@@ -3,7 +3,6 @@ import LoginView from './LoginView';
 import { connect } from 'react-redux';
 
 import {
-    authDiscover,
     authInitiate,
     authFinalize,
     getUserInfo
@@ -24,7 +23,6 @@ class LoginContainer extends Component {
 const mapDispatchToProps = () => ({
     showLoginSuccessfulScreen: navigateToLoginSuccessful,
     showOtpScreen: navigateToOTP,
-    authDiscover,
     authInitiate,
     authFinalize,
     getUserInfo
