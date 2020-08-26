@@ -1,15 +1,12 @@
 package com.bureauapp;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.react.PackageList;
+import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
+import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
-import com.faizal.OtpVerify.RNOtpVerifyPackage;
-import org.linusu.RNGetRandomValuesPackage;
-import com.horcrux.svg.SvgPackage;
-import com.reactnativecommunity.clipboard.ClipboardPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -29,15 +26,8 @@ public class MainApplication extends Application implements ReactApplication {
 
        @SuppressWarnings("UnnecessaryLocalVariable")
       List<ReactPackage> packages = new PackageList(this).getPackages();
-      // Packages that cannot be autolinked yet can be added manually here, for example:
-      //packages.add(new RNGetRandomValuesPackage());
-      // packages.add((ReactPackage) new SvgPackage());
-      // packages.add(new RNGestureHandlerPackage());
-      // packages.add(new ClipboardPackage());
-      // packages.add(new RNCWebViewPackage());
-      // packages.add(new NetworkModulePackage());
-      // packages.add(new RNOtpVerifyPackage());
 
+      packages.add(new NetworkModulePackage());
       return packages;
     }
 

@@ -47,15 +47,16 @@ async function invokeApiUsingNetworkModule(payload) {
         }
     } catch (err) {
         actionTypes.failure && dispatchAction(actionTypes.failure);
-        if (err.message === 'Data not available'){
-            await invokeApiUsingAxios(payload);
+        if (err.message === 'Network Unavailable' || err.message === 'Other network available'){
+           throw(err);
         }
     }
+    return null;
 
 }
 
 export async function fetch(payload){
-    const response = isIOS
+    const response = isIOS()
         ? await invokeApiUsingAxios(payload)
         : await invokeApiUsingNetworkModule(payload);
     return response;

@@ -87,7 +87,11 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                      @Override
                      public void onUnavailable(){
                          super.onUnavailable();
-                         promise.reject(new Exception("Data not available"));
+                         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                         if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                             promise.reject(new Exception("Other network available"));
+                         }
+                         promise.reject(new Exception("Network Unavailable"));
                      }
 
                      @Override
@@ -106,7 +110,7 @@ public class NetworkModule extends ReactContextBaseJavaModule {
                      @Override
                      public void onUnavailable(){
                          super.onUnavailable();
-                         promise.reject(new Exception("Data not available"));
+                         promise.reject(new Exception("Network Unavailable"));
                      }
 
                      @Override
