@@ -81,7 +81,14 @@ class LoginView extends Component {
       });
     } catch (error) {
       this.setState({ isLoading: false });
-      Alert.alert("Error", error.message || "Something went wrong!");
+      if(error && error.message && error.message === 'Other network available'){
+        this.props.showOtpScreen({
+          phoneNumber: this.state.phoneNumber,
+          country: this.state.selectedCountryCode.label
+        });
+      }
+      else
+        Alert.alert("Error", (error && error.message) || "Something went wrong!");
     }
   };
 
