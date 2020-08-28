@@ -1,10 +1,20 @@
-/**
- *  Redux saga class init
- */
-import { takeEvery, all } from 'redux-saga/effects';
-import * as types from '../actions/types';
-import loginSaga from './loginSaga';
+import {
+    authInitiate,
+    authFinalize
+} from './auth';
+import {
+    generateOtp,
+    verifyOtp
+} from './otp';
+import {
+    getUserInfo
+} from './userInfo';
 
-export default function* watch() {
-    yield all([takeEvery(types.LOGIN_REQUEST, loginSaga)]);
-}
+export {
+    authInitiate,
+    authFinalize,
+    getUserInfo,
+    generateOtp,
+    verifyOtp
+};
+

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import LoginView from './LoginView';
 import { connect } from 'react-redux';
-import * as loginActions from 'app/actions/loginActions';
+
+import {
+    authInitiate,
+    authFinalize,
+    getUserInfo
+} from '../../sagas';
+import { navigateToLoginSuccessful, navigateToOTP } from '../../actions/navigationActions';
 
 class LoginContainer extends Component {
     constructor(props) {
@@ -13,15 +19,16 @@ class LoginContainer extends Component {
     }
 }
 
-function mapStateToProps() {
-    return {};
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        onLogin: (un, pwd) => dispatch(loginActions.requestLogin(un, pwd))
-    };
-}
+
+const mapDispatchToProps = () => ({
+    showLoginSuccessfulScreen: navigateToLoginSuccessful,
+    showOtpScreen: navigateToOTP,
+    authInitiate,
+    authFinalize,
+    getUserInfo
+});
+    
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 )(LoginContainer);

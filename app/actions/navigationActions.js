@@ -3,6 +3,10 @@
  */
 import NavigationService from 'app/navigation/NavigationService';
 
-export function navigateToHome(params) {
-    NavigationService.navigate('Home', params);
+export function navigateToLoginSuccessful({...params}) {
+    NavigationService.navigate('LoginSuccessful', params);
+}
+
+export function navigateToOTP(params) {
+    NavigationService.navigate('Otp', params);
 }
