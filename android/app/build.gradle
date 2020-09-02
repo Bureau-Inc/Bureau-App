@@ -146,6 +146,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     signingConfigs {
@@ -158,8 +159,6 @@ android {
             }
         }
     }
-
-    signingConfig signingConfigs.release
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
