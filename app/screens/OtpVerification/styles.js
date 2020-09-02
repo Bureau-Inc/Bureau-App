@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     button: {
         height: 45,
-        width: '90%'
+        width: '80%'
     },
     buttonContainer: {
         alignItems: 'center',

@@ -1,6 +1,6 @@
 import { OTP_ENDPOINT_URL, OTP_CLIENT_ID, OTP_TOKEN } from '@env';
 
-import { invokeApi, constants } from '../api';
+import { invokeApiUsingAxios, constants } from '../api';
 import {
     OTP_GENERATE_REQUEST,
     OTP_GENERATE_SUCCESS,
@@ -29,7 +29,7 @@ export async function generateOtp(mobileNumber, country){
             failure: OTP_GENERATE_FAILURE
         }
     };
-    const response = await invokeApi(apiArgs);
+    const response = await invokeApiUsingAxios(apiArgs);
     return response;
 }
 
@@ -52,6 +52,6 @@ export async function verifyOtp(otp, mVerificationId){
             failure: OTP_VERIFY_FAILURE
         }
     };
-    const response = await invokeApi(apiArgs);
+    const response = await invokeApiUsingAxios(apiArgs);
     return response;
 }

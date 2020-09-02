@@ -1,12 +1,5 @@
-
-import 'react-native-get-random-values';
-import { v4 as uuid } from 'uuid';
-
-import { invokeApi, constants } from '../api';
+import { fetch, constants } from '../api';
 import {
-    DISCOVER_REQUEST,
-    DISCOVER_SUCCESS,
-    DISCOVER_FAILURE,
     INITIATE_REQUEST,
     INITIATE_SUCCESS,
     INITIATE_FAILURE,
@@ -16,30 +9,7 @@ import {
 } from '../actions/types';
 import { AUTH_ENDPOINT_URL, AUTH_CLIENT_ID, CALLBACK_URL } from '@env';
 
-export async function authDiscover(userIp, countryCode){
-    const apiArgs = {
-        options: {
-            method: 'get',
-            url: constants.DISCOVER,
-            baseURL: AUTH_ENDPOINT_URL,
-            params: {
-                countryCode: countryCode,
-                correlationId: uuid(),
-                userIp,
-                clientId: AUTH_CLIENT_ID
-            }
-        },
-        actionTypes: {
-            request: DISCOVER_REQUEST,
-            success: DISCOVER_SUCCESS,
-            failure: DISCOVER_FAILURE
-        }
-    };
-    const response = await invokeApi(apiArgs);
-    return response;
-}
-
-export async function authInitiate(userIp, msisdn, correlationId, countryCode){
+export async function authInitiate(msisdn, correlationId, countryCode){
     const apiArgs = {
         options: {
             method: 'get',
@@ -50,7 +20,6 @@ export async function authInitiate(userIp, msisdn, correlationId, countryCode){
                 callbackUrl: CALLBACK_URL,
                 countryCode: countryCode,
                 correlationId,
-                userIp,
                 msisdn
             },
         },
@@ -60,11 +29,11 @@ export async function authInitiate(userIp, msisdn, correlationId, countryCode){
             failure: INITIATE_FAILURE
         }
     };
-    const response = await invokeApi(apiArgs);
+    const response = await fetch(apiArgs);
     return response;
 }
 
-export async function authFinalize(correlationId){
+export async function authFinalize(correlationId, os){
     const apiArgs = {
         options: {
             method: 'get',
@@ -81,6 +50,6 @@ export async function authFinalize(correlationId){
             failure: FINALIZE_FAILURE
         }
     };
-    const response = await invokeApi(apiArgs);
+    const response = await fetch(apiArgs);
     return response;
 }

@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'flex-start',
         flex: 1,
-        position: 'relative'
+        position: 'relative',
+        paddingBottom: 200,
     },
     curveContainer: {
         alignItems: 'flex-end',
@@ -52,7 +53,8 @@ const styles = StyleSheet.create({
     },
     phoneNumber: {
         color:AppStyles.colors.BLACK,
-        fontSize: 17
+        fontSize: 17,
+        textAlignVertical: 'center',
     },
     phoneNumberContainer: {
         borderRadius: 5,
@@ -64,17 +66,20 @@ const styles = StyleSheet.create({
     },
     phoneNumberInputContainer: {
         backgroundColor: AppStyles.colors.WHITE,
-        height: '100%',
+        height: 48,
         padding: 2,
-        width:'80%'
+        width:'80%',
+        justifyContent: 'center',
+        paddingHorizontal: 10,
     },
     phoneNumberPrefixContainer: {
         alignItems: 'center',
         backgroundColor: AppStyles.colors.WHITE,
         borderRightWidth: 1,
-        height: '100%',
+        height: 48,
         padding: 2,
-        width: '20%'
+        width: '20%',
+        justifyContent: 'center',
     },
     text: {
         color: AppStyles.colors.WHITE,

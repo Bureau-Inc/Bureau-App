@@ -3,13 +3,11 @@ import { View, Image, Text } from 'react-native';
 import { BlueContainer } from '../../config/svgs';
 import styles from './styles';
 import images from '../../config/images';
-
 class LoginView extends Component {
     constructor(props) {
         super(props);
     }
     navigate = () => {};
-
     render() {
         return (
             <View style={styles.container}>
@@ -41,5 +39,4 @@ class LoginView extends Component {
         );
     }
 }
-
 export default LoginView;

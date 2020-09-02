@@ -1,18 +1,16 @@
 package com.bureauapp;
 
 import android.app.Application;
+import android.util.Log;
 
+import com.facebook.react.PackageList;
+import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
+import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
-import org.linusu.RNGetRandomValuesPackage;
-import com.horcrux.svg.SvgPackage;
-import com.reactnativecommunity.clipboard.ClipboardPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -25,13 +23,12 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new RNGetRandomValuesPackage(),
-            new SvgPackage(),
-            new RNGestureHandlerPackage(),
-            new ClipboardPackage()
-      );
+
+       @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+
+      packages.add(new NetworkModulePackage());
+      return packages;
     }
 
     @Override
