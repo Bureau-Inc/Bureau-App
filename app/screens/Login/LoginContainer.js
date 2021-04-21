@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import {
     authInitiate,
-    authFinalize,
     getUserInfo
 } from '../../sagas';
 import { navigateToLoginSuccessful, navigateToOTP } from '../../actions/navigationActions';
@@ -24,7 +23,6 @@ const mapDispatchToProps = () => ({
     showLoginSuccessfulScreen: navigateToLoginSuccessful,
     showOtpScreen: navigateToOTP,
     authInitiate,
-    authFinalize,
     getUserInfo
 });
     

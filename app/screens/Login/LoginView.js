@@ -62,7 +62,6 @@ class LoginView extends Component {
         correlationId,
         this.state.selectedCountryCode.label
       );
-      const authFinalizeResponse = await this.props.authFinalize(correlationId);
 
       const userInfo = await this._getUserInfo(correlationId);
       if (
@@ -169,7 +168,6 @@ class LoginView extends Component {
 
 LoginView.propTypes = {
   authInitiate: PropTypes.func,
-  authFinalize: PropTypes.func,
   getUserInfo: PropTypes.func,
   showLoginSuccessfulScreen: PropTypes.func,
   showOtpScreen: PropTypes.func
